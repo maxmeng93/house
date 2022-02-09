@@ -38,8 +38,8 @@ export default class Wall {
     const texture = new THREE.TextureLoader().load('/img/Bricks074_1K_Color.jpg');
 
     const geometry = new THREE.BoxGeometry(width, height, depth);
-    const material = new THREE.MeshBasicMaterial({ map: texture });
-    // const material = new THREE.MeshBasicMaterial({ color: color, wireframe: false });
+    // const material = new THREE.MeshBasicMaterial({ map: texture });
+    const material = new THREE.MeshBasicMaterial({ color: color, wireframe: true });
     const cube = new THREE.Mesh(geometry, material);
 
     cube.position.set(x, y, z);
