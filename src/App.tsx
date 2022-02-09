@@ -8,6 +8,8 @@ function App() {
 
   useEffect(() => {
     init();
+
+    document.addEventListener('resize', init);
   }, []);
 
   return <div id="webgl-output"></div>;
