@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import Stats from 'stats.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import Wall from './wall';
-import { Camera, Renderer } from './utils';
+import { initCamera, initRenderer } from './utils';
 const ThreeBSP = require('jthreebsp')(THREE);
 
 export function init() {
@@ -28,11 +28,10 @@ export function init() {
   scene.add(axes);
 
   // 相机
-  const camera = new Camera({ position: { x: 100, y: 100, z: 100 }, lookAt: scene.position })
-    .camera;
+  const camera = initCamera({ position: { x: 100, y: 100, z: 100 }, lookAt: scene.position });
 
   // 渲染器
-  const renderer = new Renderer(window.innerWidth, window.innerHeight).renderer;
+  const renderer = initRenderer(window.innerWidth, window.innerHeight);
 
   new OrbitControls(camera, renderer.domElement);
   container.appendChild(renderer.domElement);
