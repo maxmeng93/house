@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { CSG } from 'three-csg-ts';
+import { initLight } from './utils';
 
 interface FloorConfig {
   // 长x
@@ -33,11 +34,11 @@ export default class Floor {
 
     const { floors, scene } = this.config;
 
-    floors.forEach((f, i) => {
-      this.storey(f);
-    });
+    // floors.forEach((f, i) => {
+    //   this.storey(f, i);
+    // });
 
-    const storeyMeshList = floors.map((f) => this.storey(f));
+    const storeyMeshList = floors.map((f, i) => this.storey(f, i));
 
     storeyMeshList.forEach((s, i) => {
       floorScene.add(s);
@@ -50,10 +51,13 @@ export default class Floor {
       s.castShadow = true;
     });
 
+    const light = new THREE.AmbientLight(0x111111);
+    scene.add(light);
+
     scene.add(floorScene);
   }
 
-  storey(storeyConfig: FloorConfig): THREE.Mesh {
+  storey(storeyConfig: FloorConfig, index: number): THREE.Mesh {
     const { width, height, depth } = storeyConfig;
 
     const geometry = new THREE.BoxGeometry(width, height, depth);
@@ -64,14 +68,31 @@ export default class Floor {
     cutBox.scale.multiplyScalar(0.9);
     cutBox.updateMatrix();
 
-    const emptyCube = CSG.subtract(boxMesh, cutBox);
+    let emptyCube = CSG.subtract(boxMesh, cutBox);
+
+    // 窗
+    const windowgeo = new THREE.BoxGeometry(5, 5, 5);
+    windowgeo.applyMatrix4(new THREE.Matrix4().makeTranslation(25, 0, 0));
+    const window = new THREE.Mesh(windowgeo);
+    window.updateMatrix();
+    emptyCube = CSG.subtract(emptyCube, window);
+
+    if (index === 0) {
+      // 门
+      const doorgeo = new THREE.BoxGeometry(5, 8, 5);
+      doorgeo.applyMatrix4(new THREE.Matrix4().makeTranslation(25, 0, -20));
+      const door = new THREE.Mesh(doorgeo);
+      door.updateMatrix();
+      emptyCube = CSG.subtract(emptyCube, door);
+    }
+
     var material = new THREE.MeshLambertMaterial({
       color: 0xdadada,
       side: THREE.DoubleSide,
       // wireframe: true,
     });
-    emptyCube.material = material;
 
+    emptyCube.material = material;
     return emptyCube;
   }
 }
