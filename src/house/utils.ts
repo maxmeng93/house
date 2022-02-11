@@ -9,6 +9,12 @@ interface Config {
   lookAt: THREE.Vector3;
 }
 
+// 坐标轴
+export function initAxes(group: THREE.Group | THREE.Scene, size?: number) {
+  const axes = new THREE.AxesHelper(size);
+  group.add(axes);
+}
+
 // 透视相机
 export function initCamera({ position, lookAt }: Config) {
   const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);

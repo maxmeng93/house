@@ -2,7 +2,7 @@ import * as THREE from 'three';
 // 组合网格
 import Stats from 'stats.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { initCamera, initRenderer, initLight } from './utils';
+import { initCamera, initRenderer, initLight, initAxes } from './utils';
 import Floor from './floor';
 
 export function init() {
@@ -16,9 +16,7 @@ export function init() {
 
   initLight(scene);
 
-  // 坐标系辅助工具
-  const axes = new THREE.AxesHelper(100);
-  scene.add(axes);
+  initAxes(scene, 100);
 
   // 相机
   const camera = initCamera({ position: { x: 100, y: 100, z: 100 }, lookAt: scene.position });
@@ -36,12 +34,14 @@ export function init() {
         width: 50,
         height: 10,
         depth: 50,
+        thickness: 0.5,
       },
-      {
-        width: 50,
-        height: 10,
-        depth: 50,
-      },
+      // {
+      //   width: 50,
+      //   height: 10,
+      //   depth: 50,
+      //   thickness: 0.5,
+      // },
     ],
   });
 

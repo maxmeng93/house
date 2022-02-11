@@ -1,22 +1,26 @@
 import * as THREE from 'three';
 import { CSG } from 'three-csg-ts';
+import { initAxes } from './utils';
 import skyPanoImg from './sky-dome-panorma.jpg';
+// import textureImg from './img/Bricks074_1K_Color.jpg';
 
 interface FloorConfig {
-  // 长x
+  /** 长x */
   width: number;
-  // 宽y
+  /** 高y */
   height: number;
-  // 高z
+  /** 宽z */
   depth: number;
+  /** 墙体厚度 */
+  thickness?: number;
 }
 
 interface Config {
-  // 场景
-  scene: THREE.Scene;
-  // 楼层
+  /** 父对象 */
+  scene: THREE.Scene | THREE.Object3D | THREE.Group;
+  /** 楼层数量 */
   number?: number;
-  // 配置
+  /** 楼层配置 */
   floors: FloorConfig[];
 }
 
@@ -34,14 +38,13 @@ export default class Floor {
 
     const { floors, scene } = this.config;
 
-    const storeyMeshList = floors.map((f, i) => this.storey(f, i, floorScene));
+    const storeyMeshList = floors.map((f, i) => this.createStorey(f, i));
 
     storeyMeshList.forEach((s, i) => {
       floorScene.add(s);
 
       const y = floorHeight + floors[i].height / 2;
       floorHeight += floors[i].height;
-
       s.position.set(0, y, 0);
 
       s.castShadow = true;
@@ -53,13 +56,13 @@ export default class Floor {
     scene.add(floorScene);
   }
 
-  storey(storeyConfig: FloorConfig, index: number, floorScene: THREE.Object3D): THREE.Mesh {
-    const { width, height, depth } = storeyConfig;
+  // 楼层
+  createStorey(storeyConfig: FloorConfig, index: number): THREE.Group {
+    const group = new THREE.Group();
 
-    var material = new THREE.MeshLambertMaterial({
-      color: 0xff1111,
-      wireframe: false,
-    });
+    initAxes(group, 20);
+
+    const { width, height, depth } = storeyConfig;
 
     const geometry = new THREE.BoxGeometry(width, height, depth);
     const boxMesh = new THREE.Mesh(geometry);
@@ -70,15 +73,45 @@ export default class Floor {
     cutBox.updateMatrix();
 
     let emptyCube = CSG.subtract(boxMesh, cutBox);
+    emptyCube = this.cutWindow(emptyCube);
+    if (index === 0) emptyCube = this.cutDoor(emptyCube);
 
-    // 窗
+    this.createWindow(group);
+
+    // 纹理
+    // const texture = new THREE.TextureLoader().load(textureImg);
+    emptyCube.material = new THREE.MeshLambertMaterial({
+      color: 0xdadada,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.5,
+      // map: texture,
+      // wireframe: true,
+    });
+
+    group.add(emptyCube);
+
+    return group;
+  }
+
+  // 切出窗洞
+  cutWindow(cube: THREE.Mesh) {
     const windowgeo = new THREE.BoxGeometry(5, 5, 5);
     windowgeo.applyMatrix4(new THREE.Matrix4().makeTranslation(25, 0, 0));
     let window = new THREE.Mesh(windowgeo);
     window.updateMatrix();
-    emptyCube = CSG.subtract(emptyCube, window);
+    return CSG.subtract(cube, window);
+  }
 
-    window = new THREE.Mesh(windowgeo, material.clone());
+  // 窗户
+  createWindow(scene: THREE.Group) {
+    var material = new THREE.MeshLambertMaterial({
+      color: 0xff1111,
+      wireframe: false,
+    });
+
+    const windowgeo = new THREE.BoxGeometry(2, 5, 5);
+    const window = new THREE.Mesh(windowgeo, material.clone());
 
     new THREE.TextureLoader().load(skyPanoImg, function (texture) {
       const materialclone = material.clone();
@@ -88,28 +121,18 @@ export default class Floor {
       window.material.opacity = 0.4;
       window.material.transparent = true;
       texture.mapping = THREE.EquirectangularReflectionMapping;
-      window.position.y = 5;
-      window.scale.x = 0.5;
     });
 
-    window.position.set(0, 0, 0);
-    floorScene.add(window);
+    window.position.set(24, 0, 0);
+    scene.add(window);
+  }
 
-    if (index === 0) {
-      // 门
-      const doorgeo = new THREE.BoxGeometry(5, 8, 5);
-      doorgeo.applyMatrix4(new THREE.Matrix4().makeTranslation(25, 0, -20));
-      const door = new THREE.Mesh(doorgeo);
-      door.updateMatrix();
-      emptyCube = CSG.subtract(emptyCube, door);
-    }
-
-    emptyCube.material = new THREE.MeshLambertMaterial({
-      color: 0xdadada,
-      side: THREE.DoubleSide,
-      // wireframe: true,
-    });
-
-    return emptyCube;
+  // 切出门洞
+  cutDoor(cube: THREE.Mesh) {
+    const doorgeo = new THREE.BoxGeometry(5, 8, 5);
+    doorgeo.applyMatrix4(new THREE.Matrix4().makeTranslation(25, 0, -20));
+    const door = new THREE.Mesh(doorgeo);
+    door.updateMatrix();
+    return CSG.subtract(cube, door);
   }
 }
