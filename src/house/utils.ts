@@ -29,7 +29,9 @@ export function initCamera({ position, lookAt }: Config) {
 // 渲染器
 export function initRenderer(width: number, height: number) {
   const renderer = new THREE.WebGLRenderer();
+  renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(width, height);
+  // renderer.setClearColor('#000');
 
   return renderer;
 }
@@ -37,21 +39,27 @@ export function initRenderer(width: number, height: number) {
 // 灯光
 export function initLight(scene: THREE.Scene) {
   // 环境光
-  const light = new THREE.AmbientLight(0x111111);
-  scene.add(light);
+  const ambientLight = new THREE.AmbientLight(0xcffffff);
+  ambientLight.intensity = 1;
+  scene.add(ambientLight);
 
   // 平行光
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
   directionalLight.position.set(100, 100, 100);
   directionalLight.castShadow = true;
   directionalLight.shadow.mapSize.width = 1024;
   directionalLight.shadow.mapSize.height = 1024;
   scene.add(directionalLight);
 
-  const pointLight = new THREE.PointLight(0xffffff, 0.5);
-  pointLight.position.set(-100, 100, -100);
-  pointLight.castShadow = true;
-  pointLight.shadow.mapSize.width = 1024;
-  pointLight.shadow.mapSize.height = 1024;
-  scene.add(pointLight);
+  // const pointLight = new THREE.PointLight(0xffffff, 0.5);
+  // pointLight.position.set(-100, 100, -100);
+  // pointLight.castShadow = true;
+  // pointLight.shadow.mapSize.width = 1024;
+  // pointLight.shadow.mapSize.height = 1024;
+  // scene.add(pointLight);
+
+  return {
+    ambientLight,
+    directionalLight,
+  };
 }

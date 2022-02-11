@@ -36,12 +36,12 @@ export function init() {
         depth: 50,
         thickness: 0.5,
       },
-      // {
-      //   width: 50,
-      //   height: 10,
-      //   depth: 50,
-      //   thickness: 0.5,
-      // },
+      {
+        width: 50,
+        height: 10,
+        depth: 50,
+        thickness: 0.5,
+      },
     ],
   });
 

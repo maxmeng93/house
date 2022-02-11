@@ -1,8 +1,9 @@
 import * as THREE from 'three';
 import { CSG } from 'three-csg-ts';
 import { initAxes } from './utils';
-import skyPanoImg from './sky-dome-panorma.jpg';
-// import textureImg from './img/Bricks074_1K_Color.jpg';
+import skyPanoImg from './img/sky-dome-panorma.jpg';
+// import textureImg from './img/Bricks074_1K/Bricks074_1K_Color.jpg';
+import wallImg from './img/Bricks066_1K/Bricks066_1K_Color.jpg';
 
 interface FloorConfig {
   /** 长x */
@@ -12,7 +13,7 @@ interface FloorConfig {
   /** 宽z */
   depth: number;
   /** 墙体厚度 */
-  thickness?: number;
+  thickness: number;
 }
 
 interface Config {
@@ -60,29 +61,38 @@ export default class Floor {
   createStorey(storeyConfig: FloorConfig, index: number): THREE.Group {
     const group = new THREE.Group();
 
-    initAxes(group, 20);
+    if (index === 0) initAxes(group, 20);
 
-    const { width, height, depth } = storeyConfig;
+    const { width, height, depth, thickness } = storeyConfig;
 
-    const geometry = new THREE.BoxGeometry(width, height, depth);
-    const boxMesh = new THREE.Mesh(geometry);
-    boxMesh.updateMatrix();
+    const outGeo = new THREE.BoxGeometry(width, height, depth);
+    console.log(outGeo);
+    const outMesh = new THREE.Mesh(outGeo);
+    console.log(outMesh);
+    outMesh.updateMatrix();
 
-    const cutBox = boxMesh.clone();
-    cutBox.scale.multiplyScalar(0.9);
-    cutBox.updateMatrix();
+    const innerWidth = width - 2 * thickness;
+    const innerHeight = height - 2 * thickness;
+    const innerDepth = depth - 2 * thickness;
+    const innerGeo = new THREE.BoxGeometry(innerWidth, innerHeight, innerDepth);
+    const innerMesh = new THREE.Mesh(innerGeo);
+    innerMesh.updateMatrix();
 
-    let emptyCube = CSG.subtract(boxMesh, cutBox);
+    this.outWall(group, storeyConfig);
+
+    let emptyCube = CSG.subtract(outMesh, innerMesh);
     emptyCube = this.cutWindow(emptyCube);
     if (index === 0) emptyCube = this.cutDoor(emptyCube);
 
     this.createWindow(group);
 
+    // emptyCube.material = new THREE.MeshBasicMaterial({ color: 0xbbded6 });
+
     // 纹理
-    // const texture = new THREE.TextureLoader().load(textureImg);
+    // const texture = new THREE.TextureLoader().load(wallImg);
     emptyCube.material = new THREE.MeshLambertMaterial({
-      color: 0xdadada,
-      side: THREE.DoubleSide,
+      color: 0xbbded6,
+      // side: THREE.DoubleSide,
       transparent: true,
       opacity: 0.5,
       // map: texture,
@@ -92,6 +102,24 @@ export default class Floor {
     group.add(emptyCube);
 
     return group;
+  }
+
+  // 外墙
+  outWall(group: THREE.Group, storeyConfig: FloorConfig) {
+    const { width, height } = storeyConfig;
+
+    const wallGeo = new THREE.PlaneGeometry(width, height);
+
+    const wallTexture = new THREE.TextureLoader().load(wallImg);
+    const wallMaterial = new THREE.MeshLambertMaterial({
+      side: THREE.DoubleSide,
+      map: wallTexture,
+    });
+
+    const plane = new THREE.Mesh(wallGeo, wallMaterial);
+    plane.position.set(0, 0, 25.05);
+
+    group.add(plane);
   }
 
   // 切出窗洞
