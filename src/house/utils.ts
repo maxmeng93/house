@@ -1,14 +1,5 @@
 import * as THREE from 'three';
 
-interface Config {
-  position: {
-    x: number;
-    y: number;
-    z: number;
-  };
-  lookAt: THREE.Vector3;
-}
-
 // 坐标轴
 export function initAxes(group: THREE.Group | THREE.Scene, size?: number) {
   const axes = new THREE.AxesHelper(size);
@@ -16,7 +7,17 @@ export function initAxes(group: THREE.Group | THREE.Scene, size?: number) {
 }
 
 // 透视相机
-export function initCamera({ position, lookAt }: Config) {
+export function initCamera({
+  position,
+  lookAt,
+}: {
+  position: {
+    x: number;
+    y: number;
+    z: number;
+  };
+  lookAt: THREE.Vector3;
+}) {
   const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
 
   const { x, y, z } = position;

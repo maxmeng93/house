@@ -8,6 +8,12 @@ export interface FloorConfig {
   depth: number;
   /** 墙体厚度 */
   thickness: number;
+  /** x轴位置 */
+  x?: number;
+  /** y轴位置 */
+  y?: number;
+  /** z轴位置 */
+  z?: number;
 }
 
 /** 建筑物 */

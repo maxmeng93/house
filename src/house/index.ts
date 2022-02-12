@@ -28,6 +28,7 @@ export function init() {
 
   new Building({
     scene,
+    number: 5,
     floors: [
       {
         width: 50,

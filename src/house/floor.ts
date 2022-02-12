@@ -10,17 +10,20 @@ import { FloorConfig } from './types';
 export default class Floor {
   floor: THREE.Group;
 
-  constructor(scene: THREE.Group, storeyConfig: FloorConfig, index: number) {
-    this.floor = this.createFloor(scene, storeyConfig, index);
+  constructor(scene: THREE.Group, config: FloorConfig, index: number) {
+    this.floor = this.createFloor(scene, config, index);
   }
 
   // 楼层
-  createFloor(scene: THREE.Group, storeyConfig: FloorConfig, index: number): THREE.Group {
-    const floorGroup = new THREE.Group();
+  createFloor(scene: THREE.Group, config: FloorConfig, index: number): THREE.Group {
+    const { width, height, depth, thickness, x, y, z } = config;
+    const group = new THREE.Group();
 
-    if (index === 0) initAxes(floorGroup, 20);
+    if (x) group.position.x = x;
+    if (y) group.position.y = y;
+    if (z) group.position.z = z;
 
-    const { width, height, depth, thickness } = storeyConfig;
+    if (index === 0) initAxes(group, 20);
 
     const outGeo = new THREE.BoxGeometry(width, height, depth);
     console.log(outGeo);
@@ -35,13 +38,13 @@ export default class Floor {
     const innerMesh = new THREE.Mesh(innerGeo);
     innerMesh.updateMatrix();
 
-    this.outWall(floorGroup, storeyConfig);
+    this.outWall(group, config);
 
     let emptyCube = CSG.subtract(outMesh, innerMesh);
     emptyCube = this.cutWindow(emptyCube);
     if (index === 0) emptyCube = this.cutDoor(emptyCube);
 
-    this.createWindow(floorGroup);
+    this.createWindow(group);
 
     // emptyCube.material = new THREE.MeshBasicMaterial({ color: 0xbbded6 });
 
@@ -59,12 +62,12 @@ export default class Floor {
       // side: THREE.DoubleSide,
     });
 
-    floorGroup.add(emptyCube);
+    group.add(emptyCube);
 
     // 将楼层添加到建筑(父场景)中
-    scene.add(floorGroup);
+    scene.add(group);
 
-    return floorGroup;
+    return group;
   }
 
   // 外墙
