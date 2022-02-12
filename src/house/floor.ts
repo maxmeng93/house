@@ -5,63 +5,20 @@ import skyPanoImg from './img/sky-dome-panorma.jpg';
 // import textureImg from './img/Bricks074_1K/Bricks074_1K_Color.jpg';
 import wallImg from './img/Bricks066_1K/Bricks066_1K_Color.jpg';
 
-interface FloorConfig {
-  /** 长x */
-  width: number;
-  /** 高y */
-  height: number;
-  /** 宽z */
-  depth: number;
-  /** 墙体厚度 */
-  thickness: number;
-}
-
-interface Config {
-  /** 父对象 */
-  scene: THREE.Scene | THREE.Object3D | THREE.Group;
-  /** 楼层数量 */
-  number?: number;
-  /** 楼层配置 */
-  floors: FloorConfig[];
-}
+import { FloorConfig } from './types';
 
 export default class Floor {
-  config;
+  floor: THREE.Group;
 
-  constructor(config: Config) {
-    this.config = config;
-    this.init();
-  }
-
-  init() {
-    const floorScene = new THREE.Object3D();
-    let floorHeight = 0;
-
-    const { floors, scene } = this.config;
-
-    const storeyMeshList = floors.map((f, i) => this.createStorey(f, i));
-
-    storeyMeshList.forEach((s, i) => {
-      floorScene.add(s);
-
-      const y = floorHeight + floors[i].height / 2;
-      floorHeight += floors[i].height;
-      s.position.set(0, y, 0);
-
-      s.castShadow = true;
-    });
-
-    const light = new THREE.AmbientLight(0x111111);
-    scene.add(light);
-
-    scene.add(floorScene);
+  constructor(scene: THREE.Group, storeyConfig: FloorConfig, index: number) {
+    this.floor = this.createFloor(scene, storeyConfig, index);
   }
 
   // 楼层
-  createStorey(storeyConfig: FloorConfig, index: number): THREE.Group {
-    const group = new THREE.Group();
+  createFloor(scene: THREE.Group, storeyConfig: FloorConfig, index: number): THREE.Group {
+    const floorGroup = new THREE.Group();
 
-    if (index === 0) initAxes(group, 20);
+    if (index === 0) initAxes(floorGroup, 20);
 
     const { width, height, depth, thickness } = storeyConfig;
 
@@ -78,30 +35,36 @@ export default class Floor {
     const innerMesh = new THREE.Mesh(innerGeo);
     innerMesh.updateMatrix();
 
-    this.outWall(group, storeyConfig);
+    this.outWall(floorGroup, storeyConfig);
 
     let emptyCube = CSG.subtract(outMesh, innerMesh);
     emptyCube = this.cutWindow(emptyCube);
     if (index === 0) emptyCube = this.cutDoor(emptyCube);
 
-    this.createWindow(group);
+    this.createWindow(floorGroup);
 
     // emptyCube.material = new THREE.MeshBasicMaterial({ color: 0xbbded6 });
 
     // 纹理
     // const texture = new THREE.TextureLoader().load(wallImg);
     emptyCube.material = new THREE.MeshLambertMaterial({
-      color: 0xbbded6,
-      // side: THREE.DoubleSide,
+      // 背景色
+      color: 0xffffff,
+      // 自发光
+      emissive: 0xbbded6,
       transparent: true,
       opacity: 0.5,
       // map: texture,
       // wireframe: true,
+      // side: THREE.DoubleSide,
     });
 
-    group.add(emptyCube);
+    floorGroup.add(emptyCube);
 
-    return group;
+    // 将楼层添加到建筑(父场景)中
+    scene.add(floorGroup);
+
+    return floorGroup;
   }
 
   // 外墙

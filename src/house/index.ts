@@ -1,9 +1,8 @@
 import * as THREE from 'three';
-// 组合网格
 import Stats from 'stats.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { initCamera, initRenderer, initLight, initAxes } from './utils';
-import Floor from './floor';
+import Building from './building';
 
 export function init() {
   const container = document.getElementById('webgl-output') as HTMLElement;
@@ -27,7 +26,7 @@ export function init() {
   new OrbitControls(camera, renderer.domElement);
   container.appendChild(renderer.domElement);
 
-  new Floor({
+  new Building({
     scene,
     floors: [
       {
