@@ -21,9 +21,9 @@ export default class Floor {
 
     const { width, height, depth, thickness, x, y, z } = config;
 
-    // if (x) group.position.x = x;
-    // if (y) group.position.y = y;
-    // if (z) group.position.z = z;
+    if (x) group.position.x = x;
+    if (y) group.position.y = y;
+    if (z) group.position.z = z;
 
     this.createWall(group);
 
@@ -69,8 +69,6 @@ export default class Floor {
     emptyCube.material = new THREE.MeshLambertMaterial({
       // 背景色
       color: 0xbbded6,
-      // 自发光
-      // emissive: 0xbbded6,
       // transparent: true,
       // opacity: 0.5,
       // map: texture,
@@ -83,6 +81,8 @@ export default class Floor {
     // 将楼层添加到建筑(父场景)中
     scene.add(group);
 
+    console.log('emptyCube', emptyCube);
+
     return group;
   }
 
@@ -92,10 +92,18 @@ export default class Floor {
     const offsetW = width / 2 - thickness / 2;
     const offsetD = depth / 2 - thickness / 2;
 
-    const color = 0xbbded6;
+    const color = 0xffffff;
     const wireframe = false;
     const transparent = true;
     const opacity = 0.5;
+
+    const texture = new THREE.TextureLoader().load(wallImg);
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(1, 5);
+
+    const texture2 = texture.clone();
+    texture2.repeat.set(5, 2);
 
     const material1 = new THREE.MeshLambertMaterial({
       color: color || 0xbbded6,
@@ -103,18 +111,21 @@ export default class Floor {
       transparent,
       opacity,
       side: THREE.DoubleSide,
+      map: texture,
     });
     const material2 = new THREE.MeshLambertMaterial({
       color: color || 0xffffff,
       wireframe,
       transparent,
       opacity,
+      map: texture,
     });
     const material3 = new THREE.MeshLambertMaterial({
       color: color || 0xff0000,
       wireframe,
       transparent,
       opacity,
+      map: texture,
     });
     const material = [material1, material2, material3, material1, material2, material3];
 
