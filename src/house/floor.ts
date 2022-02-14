@@ -16,7 +16,7 @@ export default class Floor {
     this.floor = this.createFloor(scene, config, index);
   }
 
-  createFloor(scene: THREE.Group, config: FloorConfig, index: number): THREE.Group {
+  createFloor1(scene: THREE.Group, config: FloorConfig, index: number): THREE.Group {
     const group = new THREE.Group();
 
     const { width, height, depth, thickness, x, y, z } = config;
@@ -33,7 +33,7 @@ export default class Floor {
   }
 
   // 楼层
-  createFloor1(scene: THREE.Group, config: FloorConfig, index: number): THREE.Group {
+  createFloor(scene: THREE.Group, config: FloorConfig, index: number): THREE.Group {
     const { width, height, depth, thickness, x, y, z } = config;
     const group = new THREE.Group();
 
@@ -66,6 +66,10 @@ export default class Floor {
 
     // 纹理
     // const texture = new THREE.TextureLoader().load(wallImg);
+    // texture.wrapS = THREE.RepeatWrapping;
+    // texture.wrapT = THREE.RepeatWrapping;
+    // texture.repeat.set(1, 5);
+
     emptyCube.material = new THREE.MeshLambertMaterial({
       // 背景色
       color: 0xbbded6,
@@ -171,10 +175,13 @@ export default class Floor {
 
     const wallGeo = new THREE.PlaneGeometry(width, height);
 
-    const wallTexture = new THREE.TextureLoader().load(wallImg);
+    const texture = new THREE.TextureLoader().load(wallImg);
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(15, 3);
     const wallMaterial = new THREE.MeshLambertMaterial({
       side: THREE.DoubleSide,
-      map: wallTexture,
+      map: texture,
     });
 
     const plane = new THREE.Mesh(wallGeo, wallMaterial);
