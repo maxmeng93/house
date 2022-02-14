@@ -65,10 +65,28 @@ receiveShadow 接受显示阴影
 3. THREE.SmoothShading顶点法向量、THREE.FlatShading平面法向量
 
 ## 参考
+使用three.js搭建室内场景
 https://blog.csdn.net/u014529917/article/details/82801737
+
+首个threejs项目-前端填坑指南【转】
+https://www.cnblogs.com/mazhenyu/p/8692835.html
+
+ThreeJs做智慧城市项目后记
+https://blog.csdn.net/qq_37540004/article/details/102862348
+
 https://wow.techbrood.com/static/20210123/60783.html
 https://www.techbrood.com/?q=%E6%A5%BC
 https://www.bilibili.com/s/video/BV1ob4y1y7o4
 https://blog.csdn.net/qq_29814417/article/details/117598186
 https://juejin.cn/post/6844903957416902669 https://github.com/funky-tiger/shanghai-bund
 https://juejin.cn/post/6844904177345232903
+
+我是如何用 Three.js 在三维世界建房子的（详细教程）
+https://juejin.cn/post/7038824515404562463
+https://github.com/QuarkGluonPlasma/threejs-exercize
+
+https://juejin.cn/post/6844904014845313038
+
+https://www.jb51.net/article/153778.htm
+
+http://www.360doc.com/content/20/0809/11/65097895_929317137.shtml

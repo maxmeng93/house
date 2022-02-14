@@ -28,9 +28,6 @@ export default class Building {
       return floor;
     });
 
-    const light = new THREE.AmbientLight(0x111111);
-    scene.add(light);
-
     scene.add(group);
   }
 }

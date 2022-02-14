@@ -9,13 +9,31 @@ import { FloorConfig } from './types';
 
 export default class Floor {
   floor: THREE.Group;
+  config: FloorConfig;
 
   constructor(scene: THREE.Group, config: FloorConfig, index: number) {
+    this.config = config;
     this.floor = this.createFloor(scene, config, index);
   }
 
-  // 楼层
   createFloor(scene: THREE.Group, config: FloorConfig, index: number): THREE.Group {
+    const group = new THREE.Group();
+
+    const { width, height, depth, thickness, x, y, z } = config;
+
+    // if (x) group.position.x = x;
+    // if (y) group.position.y = y;
+    // if (z) group.position.z = z;
+
+    this.createWall(group);
+
+    scene.add(group);
+
+    return group;
+  }
+
+  // 楼层
+  createFloor1(scene: THREE.Group, config: FloorConfig, index: number): THREE.Group {
     const { width, height, depth, thickness, x, y, z } = config;
     const group = new THREE.Group();
 
@@ -26,9 +44,7 @@ export default class Floor {
     if (index === 0) initAxes(group, 20);
 
     const outGeo = new THREE.BoxGeometry(width, height, depth);
-    console.log(outGeo);
     const outMesh = new THREE.Mesh(outGeo);
-    console.log(outMesh);
     outMesh.updateMatrix();
 
     const innerWidth = width - 2 * thickness;
@@ -44,7 +60,7 @@ export default class Floor {
     emptyCube = this.cutWindow(emptyCube);
     if (index === 0) emptyCube = this.cutDoor(emptyCube);
 
-    this.createWindow(group);
+    // this.createWindow(group);
 
     // emptyCube.material = new THREE.MeshBasicMaterial({ color: 0xbbded6 });
 
@@ -52,11 +68,11 @@ export default class Floor {
     // const texture = new THREE.TextureLoader().load(wallImg);
     emptyCube.material = new THREE.MeshLambertMaterial({
       // 背景色
-      color: 0xffffff,
+      color: 0xbbded6,
       // 自发光
-      emissive: 0xbbded6,
-      transparent: true,
-      opacity: 0.5,
+      // emissive: 0xbbded6,
+      // transparent: true,
+      // opacity: 0.5,
       // map: texture,
       // wireframe: true,
       // side: THREE.DoubleSide,
@@ -70,9 +86,77 @@ export default class Floor {
     return group;
   }
 
+  // 4面墙、地板、天花板
+  createWall(floorScene: THREE.Group) {
+    const { width, height, depth, thickness } = this.config;
+    const offsetW = width / 2 - thickness / 2;
+    const offsetD = depth / 2 - thickness / 2;
+
+    const color = 0xbbded6;
+    const wireframe = false;
+    const transparent = true;
+    const opacity = 0.5;
+
+    const material1 = new THREE.MeshLambertMaterial({
+      color: color || 0xbbded6,
+      wireframe,
+      transparent,
+      opacity,
+      side: THREE.DoubleSide,
+    });
+    const material2 = new THREE.MeshLambertMaterial({
+      color: color || 0xffffff,
+      wireframe,
+      transparent,
+      opacity,
+    });
+    const material3 = new THREE.MeshLambertMaterial({
+      color: color || 0xff0000,
+      wireframe,
+      transparent,
+      opacity,
+    });
+    const material = [material1, material2, material3, material1, material2, material3];
+
+    // 后
+    const wall1Geo = new THREE.BoxGeometry(width, height, thickness);
+    const wall1 = new THREE.Mesh(wall1Geo, material);
+    wall1.position.set(0, 0, -offsetD);
+    floorScene.add(wall1);
+
+    // 前
+    const wall2 = wall1.clone();
+    wall2.position.set(0, 0, offsetD);
+    floorScene.add(wall2);
+
+    // 左
+    const wall3geo = new THREE.BoxGeometry(depth, height, thickness);
+    const wall3 = new THREE.Mesh(wall3geo, material);
+    wall3.rotateY(0.5 * Math.PI);
+    wall3.position.set(-offsetW, 0, 0);
+    floorScene.add(wall3);
+
+    // 右
+    const wall4 = wall3.clone();
+    wall4.position.set(offsetW, 0, 0);
+    floorScene.add(wall4);
+
+    // 顶
+    const topGeo = new THREE.PlaneGeometry(width, depth);
+    const top = new THREE.Mesh(topGeo, material[0]);
+    top.rotateX(0.5 * Math.PI);
+    top.position.set(0, height / 2, 0);
+    floorScene.add(top);
+
+    // 底
+    const bottom = top.clone();
+    bottom.position.set(0, -height / 2, 0);
+    floorScene.add(bottom);
+  }
+
   // 外墙
-  outWall(group: THREE.Group, storeyConfig: FloorConfig) {
-    const { width, height } = storeyConfig;
+  outWall(group: THREE.Group, floorConfig: FloorConfig) {
+    const { width, height } = floorConfig;
 
     const wallGeo = new THREE.PlaneGeometry(width, height);
 

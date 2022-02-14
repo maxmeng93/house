@@ -40,16 +40,16 @@ export function initRenderer(width: number, height: number) {
 // 灯光
 export function initLight(scene: THREE.Scene) {
   // 环境光
-  const ambientLight = new THREE.AmbientLight(0xcffffff);
-  ambientLight.intensity = 1;
+  const ambientLight = new THREE.AmbientLight(0xffffff);
+  ambientLight.position.set(0, 0, 0);
   scene.add(ambientLight);
 
   // 平行光
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-  directionalLight.position.set(100, 100, 100);
-  directionalLight.castShadow = true;
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+  directionalLight.position.set(-1000, 1000, 1000);
   directionalLight.shadow.mapSize.width = 1024;
   directionalLight.shadow.mapSize.height = 1024;
+  directionalLight.castShadow = true;
   scene.add(directionalLight);
 
   // const pointLight = new THREE.PointLight(0xffffff, 0.5);
