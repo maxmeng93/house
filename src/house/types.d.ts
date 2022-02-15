@@ -1,3 +1,13 @@
+/** 建筑物 */
+export interface BuildingConfig {
+  /** 楼层数量，当number为正整数时，将使用floor[0]数据快速新建number层楼 */
+  number?: number;
+  /** 楼层配置 */
+  floor: FloorConfig[];
+  /** 电梯配置 */
+  elevator?: ElevatorConfig[];
+}
+
 /** 楼层 */
 export interface FloorConfig {
   /** 长x */
@@ -16,12 +26,20 @@ export interface FloorConfig {
   z?: number;
 }
 
-/** 建筑物 */
-export interface BuildingConfig {
-  /** 父对象 */
-  scene: THREE.Scene | THREE.Object3D | THREE.Group;
-  /** 楼层数量 */
-  number?: number;
-  /** 楼层配置 */
-  floors: FloorConfig[];
+/** 电梯 */
+export interface ElevatorConfig {
+  /** 开始楼层 */
+  start: number;
+  /** 结束楼层 */
+  end: number;
+  /** 长 x轴 */
+  width: number;
+  /** 高 y轴 */
+  height: number;
+  /** 宽 z轴 */
+  depth: number;
+  /** 坐标 x */
+  x: number;
+  /** 坐标 z */
+  z: number;
 }

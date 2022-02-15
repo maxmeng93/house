@@ -26,10 +26,9 @@ export function init() {
   new OrbitControls(camera, renderer.domElement);
   container.appendChild(renderer.domElement);
 
-  new Building({
-    scene,
-    number: 1,
-    floors: [
+  new Building(scene, {
+    number: 3,
+    floor: [
       {
         width: 50,
         height: 10,
@@ -41,6 +40,26 @@ export function init() {
         height: 10,
         depth: 50,
         thickness: 0.5,
+      },
+    ],
+    elevator: [
+      {
+        start: 1,
+        end: 2,
+        width: 8,
+        height: 10,
+        depth: 8,
+        x: 10,
+        z: -10,
+      },
+      {
+        start: 2,
+        end: 3,
+        width: 8,
+        height: 10,
+        depth: 8,
+        x: -10,
+        z: -10,
       },
     ],
   });

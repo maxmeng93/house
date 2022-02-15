@@ -1,5 +1,14 @@
 import * as THREE from 'three';
 
+// 计算网格中心坐标
+export function calcPosition(
+  volume: { width: number; height: number; depth: number },
+  coordinate: { x: number; y: number; z: number }
+) {
+  const { width, height, depth } = volume;
+  const { x, y, z } = coordinate;
+}
+
 // 坐标轴
 export function initAxes(group: THREE.Group | THREE.Scene, size?: number) {
   const axes = new THREE.AxesHelper(size);

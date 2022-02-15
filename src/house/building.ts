@@ -1,33 +1,49 @@
 import * as THREE from 'three';
 import { BuildingConfig } from './types';
 import Floor from './floor';
+import Elevator from './elevator';
 
 export default class Building {
   config: BuildingConfig;
+  // 建筑物组
+  group: THREE.Group;
   // 大楼高度
   height = 0;
+  // 楼层组列表
+  floorList: THREE.Group[] = [];
+  // 电梯组列表
+  elevatorList: THREE.Group[] = [];
 
-  constructor(config: BuildingConfig) {
+  constructor(scene: THREE.Scene, config: BuildingConfig) {
     this.config = config;
-    this.init();
+    this.group = new THREE.Group();
+
+    this.createElevator();
+    this.createFloor();
+
+    scene.add(this.group);
   }
 
-  init() {
-    const group = new THREE.Group();
+  // 创建楼层
+  createFloor() {
+    const { floor, number } = this.config;
 
-    const { scene, floors, number } = this.config;
+    const arr = number && number > 0 ? new Array(number).fill(floor[0]) : floor;
 
-    const arr = number && number > 0 ? new Array(number).fill(floors[0]) : floors;
-
-    arr.map((f, i) => {
+    this.floorList = arr.map((f, i) => {
       const y = this.height + f.height / 2;
       this.height += f.height;
 
-      const floor = new Floor(group, { ...f, y }, i).floor;
-
-      return floor;
+      return new Floor(this.group, { ...f, y }, i).group;
     });
+  }
 
-    scene.add(group);
+  // 创建电梯
+  createElevator() {
+    const { elevator = [] } = this.config;
+
+    this.elevatorList = elevator.map((item) => {
+      return new Elevator(this.group, item).group;
+    });
   }
 }
