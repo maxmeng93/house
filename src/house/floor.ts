@@ -18,7 +18,8 @@ export default class Floor {
 
     // 初始化材质
     this.material = this.initMaterial();
-    this.createFloor(config, index);
+    // this.createFloor(config, index);
+    this.createFloor1(scene, config, index);
 
     scene.add(this.group);
   }
@@ -44,6 +45,62 @@ export default class Floor {
       map: texture,
       side: THREE.DoubleSide,
     });
+  }
+
+  // 楼层
+  createFloor1(scene: THREE.Group, config: FloorConfig, index: number): THREE.Group {
+    const { width, height, depth, thickness, x, y, z } = config;
+    const group = new THREE.Group();
+
+    if (x) group.position.x = x;
+    if (y) group.position.y = y;
+    if (z) group.position.z = z;
+
+    if (index === 0) initAxes(group, 20);
+
+    const outGeo = new THREE.BoxGeometry(width, height, depth);
+    const outMesh = new THREE.Mesh(outGeo);
+    outMesh.updateMatrix();
+
+    const innerWidth = width - 2 * thickness;
+    const innerHeight = height - 2 * thickness;
+    const innerDepth = depth - 2 * thickness;
+    const innerGeo = new THREE.BoxGeometry(innerWidth, innerHeight, innerDepth);
+    const innerMesh = new THREE.Mesh(innerGeo);
+    innerMesh.updateMatrix();
+
+    this.outWall(group, config);
+
+    let emptyCube = CSG.subtract(outMesh, innerMesh);
+    emptyCube = this.cutWindow(emptyCube);
+    if (index === 0) emptyCube = this.cutDoor(emptyCube);
+
+    // this.createWindow(group);
+
+    // emptyCube.material = new THREE.MeshBasicMaterial({ color: 0xbbded6 });
+
+    // 纹理
+    // const texture = new THREE.TextureLoader().load(wallImg);
+    emptyCube.material = new THREE.MeshLambertMaterial({
+      // 背景色
+      color: 0xbbded6,
+      // 自发光
+      // emissive: 0xbbded6,
+      // transparent: true,
+      // opacity: 0.5,
+      // map: texture,
+      // wireframe: true,
+      // side: THREE.DoubleSide,
+    });
+
+    console.log('emptyCube', emptyCube.geometry);
+
+    group.add(emptyCube);
+
+    // 将楼层添加到建筑(父场景)中
+    scene.add(group);
+
+    return group;
   }
 
   createFloor(config: FloorConfig, index: number) {
