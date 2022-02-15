@@ -18,8 +18,8 @@ export default class Floor {
 
     // 初始化材质
     this.material = this.initMaterial();
-    // this.createFloor(config, index);
-    this.createFloor1(scene, config, index);
+    this.createFloor(config, index);
+    // this.createFloor1(scene, config, index);
 
     scene.add(this.group);
   }
