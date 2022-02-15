@@ -69,7 +69,7 @@ export default class Floor {
     const innerMesh = new THREE.Mesh(innerGeo);
     innerMesh.updateMatrix();
 
-    this.outWall(group, config);
+    // this.outWall(group, config);
 
     let emptyCube = CSG.subtract(outMesh, innerMesh);
     emptyCube = this.cutWindow(emptyCube);
@@ -81,18 +81,28 @@ export default class Floor {
 
     // 纹理
     // const texture = new THREE.TextureLoader().load(wallImg);
-    emptyCube.material = new THREE.MeshLambertMaterial({
-      // 背景色
-      color: 0xbbded6,
-      // 自发光
-      // emissive: 0xbbded6,
-      // transparent: true,
-      // opacity: 0.5,
-      // map: texture,
-      // wireframe: true,
-      // side: THREE.DoubleSide,
-    });
+    // emptyCube.material = new THREE.MeshLambertMaterial({
+    //   // 背景色
+    //   color: 0xbbded6,
+    //   // 自发光
+    //   // emissive: 0xbbded6,
+    //   // transparent: true,
+    //   // opacity: 0.5,
+    //   // map: texture,
+    //   // wireframe: true,
+    //   // side: THREE.DoubleSide,
+    // });
 
+    emptyCube.material = [
+      new THREE.MeshBasicMaterial({ color: 0xff0000 }), // 外 前+后
+      new THREE.MeshBasicMaterial({ color: 0xeeeeee }), // 外 顶
+      new THREE.MeshBasicMaterial({ color: 0xeeeeee }), // 外 左+右 里 前+后 上+下 左
+      new THREE.MeshBasicMaterial({ color: 0xeeeeee }), // 里 右
+      new THREE.MeshBasicMaterial({ color: 0xff0000 }),
+    ];
+
+    console.log('emptyCube.geometry', emptyCube.geometry);
+    console.log('emptyCube', emptyCube);
     console.log('emptyCube', emptyCube.geometry);
 
     group.add(emptyCube);

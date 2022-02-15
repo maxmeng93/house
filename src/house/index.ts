@@ -27,7 +27,7 @@ export function init() {
   container.appendChild(renderer.domElement);
 
   new Building(scene, {
-    number: 3,
+    number: 1,
     floor: [
       {
         width: 50,
