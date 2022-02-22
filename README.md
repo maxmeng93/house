@@ -79,6 +79,8 @@ https://www.techbrood.com/?q=%E6%A5%BC
 https://www.bilibili.com/s/video/BV1ob4y1y7o4
 https://blog.csdn.net/qq_29814417/article/details/117598186
 https://juejin.cn/post/6844903957416902669 https://github.com/funky-tiger/shanghai-bund
+
+从零开始初尝Three.js【大量案例、简单入手】
 https://juejin.cn/post/6844904177345232903
 
 我是如何用 Three.js 在三维世界建房子的（详细教程）
@@ -94,5 +96,11 @@ http://www.360doc.com/content/20/0809/11/65097895_929317137.shtml
 ThreeJs做智慧城市项目后记
 https://www.daimajiaoliu.com/daima/4797a15af1003f8
 
-
+三维文件格式知多少
 http://www.bgteach.com/article/132
+
+three.js 怎么点击加载完成的gltf模型
+https://segmentfault.com/q/1010000015893234
+
+glTF格式详解
+https://zhuanlan.zhihu.com/p/65265611

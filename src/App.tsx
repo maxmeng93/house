@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import * as THREE from 'three';
-import { init } from './house';
+// import { init } from './house';
+import { init } from './robot';
 import './App.css';
 
 function App() {
