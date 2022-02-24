@@ -2,7 +2,6 @@ import * as THREE from 'three';
 import Stats from 'stats.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import { initCamera, initRenderer, initLight, initAxes } from './utils';
 
 export function init() {
@@ -23,40 +22,46 @@ export function init() {
 
   // 渲染器
   const renderer = initRenderer(window.innerWidth, window.innerHeight);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+	renderer.toneMappingExposure = 1;
+	renderer.outputEncoding = THREE.sRGBEncoding;
 
   new OrbitControls(camera, renderer.domElement);
   container.appendChild(renderer.domElement);
 
   let robot: THREE.Object3D = new THREE.Object3D();
-  // 加载机器人模型
-  const loader = new GLTFLoader();
-  loader.load(
-    // '/models/robot1.gltf',
-    '/models/cute_little_robot/scene.gltf',
-    function (gltf) {
-      console.log('模型', gltf);
 
-      const root = gltf.scene.children[0].children[0].children[0].children[0];
-      console.log('root', root);
-      robot = root;
-      root.scale.set(20, 20, 20);
-      root.rotateX(-Math.PI * 0.5);
-      root.rotateY(-Math.PI * 0.8);
-      scene.add(root);
-    },
-    function (xhr) {
-      console.log('xhr', xhr);
-      console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
-    },
-    function (error) {
-      console.log('ERROR: 加载模型出错');
-    }
-  );
+  // // 加载头盔
+  // const loader1 = new GLTFLoader().setPath('/models/DamagedHelmet/glTF/')
+  // loader1.load('DamagedHelmet.gltf', function(gltf) {
+  //   console.log(gltf)
+  //   gltf.scene.scale.set(20, 20, 20);
+  //   gltf.scene.position.x -= 50;
+  //   scene.add(gltf.scene);
+  // })
+
+  // // 加载机器人模型
+  // const loader2 = new GLTFLoader().setPath('/models/cute_little_robot/');
+  // loader2.load('scene.gltf', function (gltf) {
+  //     gltf.scene.scale.set(20, 20, 20);
+  //     gltf.scene.rotateY(-Math.PI * 0.8);
+  //     scene.add(gltf.scene);
+  //   }
+  // );
+
+  // 加载直立机器人
+  const loader3 = new GLTFLoader().setPath('/models/biped_robot/')
+  loader3.load('scene.gltf', function(gltf) {
+    console.log('robot gltf', gltf)
+    robot = gltf.scene;
+    gltf.scene.scale.set(0.5, 0.5, 0.5);
+    gltf.scene.position.x += 50;
+    scene.add(gltf.scene);
+  })
 
   render();
 
-  console.log('scene', scene);
-
+  // 射线
   const raycaster = new THREE.Raycaster();
   const mouse = new THREE.Vector2();
   window.addEventListener('mousedown', function (e) {
@@ -64,7 +69,7 @@ export function init() {
     mouse.y = -((e.clientY / renderer.domElement.clientHeight) * 2) + 1;
 
     raycaster.setFromCamera(mouse, camera);
-    console.log('scene.children', scene.children);
+    console.log('robot.children', robot.children);
     var intersects = raycaster.intersectObjects(robot.children);
     console.log('intersects', intersects);
 
