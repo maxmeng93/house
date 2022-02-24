@@ -49,6 +49,7 @@
   "devDependencies": {
     "@types/dat.gui": "^0.7.7",
     "@types/stats.js": "^0.17.0",
-    "@types/three": "^0.136.1"
+    "@types/three": "^0.136.1",
+    "gltf-pipeline": "^3.0.4"
   }
 }
