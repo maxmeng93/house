@@ -38,7 +38,7 @@ export function initCamera({
 
 // 渲染器
 export function initRenderer(width: number, height: number) {
-  const renderer = new THREE.WebGLRenderer();
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(width, height);
   // renderer.setClearColor('#000');

@@ -63,6 +63,7 @@ receiveShadow 接受显示阴影
 1. 使用 Three.js 渲染场景时，首先需要做的是创建 THREE.Scene 对象，添加摄像机、光源和需要渲染的物体；如何给场景添加阴影和动画效果；添加辅助库 dat.GUI 和 stats.js 创建用户控制界面和快速获取场景渲染时的帧数。
 2. 可以为对象命名 xxx.name = 'xxx1' 然后通过 Three.getObjectByName('xxx1') 来获取场景中对应名字的对象。
 3. THREE.SmoothShading顶点法向量、THREE.FlatShading平面法向量
+4. 使用[gltf-pipeline](https://www.npmjs.com/package/gltf-pipeline) 压缩 gltf 模型
 
 ## 参考
 使用three.js搭建室内场景
@@ -102,5 +103,15 @@ http://www.bgteach.com/article/132
 three.js 怎么点击加载完成的gltf模型
 https://segmentfault.com/q/1010000015893234
 
-glTF格式详解
+glTF格式详解(.gltf .glb .fbx .obj)
 https://zhuanlan.zhihu.com/p/65265611
+
+**Three.js模型加载速度(模型太大)**
+减面和导出法线贴图、颜色贴图、金属粗糙贴图
+http://www.yanhuangxueyuan.com/doc/Three.js/ModelTooBig.html
+
+**如何在页面极速渲染3D模型**
+https://cloud.tencent.com/developer/article/1552903
+
+Threejs大型obj文件的秒加载实现
+https://www.jianshu.com/p/5c2cafcea26c
