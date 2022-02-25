@@ -5,6 +5,9 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { initCamera, initRenderer, initLight, initAxes } from './utils';
 
 export function init() {
+  // 时间
+  const clock = new THREE.Clock();
+
   const container = document.getElementById('webgl-output') as HTMLElement;
   // 场景
   const scene = new THREE.Scene();
@@ -49,6 +52,7 @@ export function init() {
   //   }
   // );
 
+  let mixer: THREE.AnimationMixer | null = null;
   // 加载直立机器人
   const loader3 = new GLTFLoader().setPath('/models/biped_robot/')
   loader3.load('scene.gltf', function(gltf) {
@@ -57,15 +61,37 @@ export function init() {
     gltf.scene.scale.set(0.5, 0.5, 0.5);
     gltf.scene.position.x += 50;
     scene.add(gltf.scene);
+
+    // 添加骨架
+    const skeleton = new THREE.SkeletonHelper(gltf.scene);
+    skeleton.visible = true;
+    scene.add(skeleton);
+
+    mixer = new THREE.AnimationMixer(gltf.scene);
+    mixer.clipAction(gltf.animations[0]).play();
   })
 
+  // // 加载粉色直立机器人（动画）
+  // const loader5 = new GLTFLoader().setPath('/models/');
+
+  // loader5.load('Xbot.glb', function (gltf) {
+  //   console.log('xbot', gltf);
+  //   gltf.scene.scale.set(40, 40, 40);
+  //   gltf.scene.rotateY(-Math.PI * 0.8);
+  //   scene.add(gltf.scene);
+
+  //   const skeleton = new THREE.SkeletonHelper(gltf.scene);
+  //   skeleton.visible = true;
+  //   scene.add(skeleton);
+
+  //   mixer = new THREE.AnimationMixer(gltf.scene);
+  //   const action = mixer.clipAction(gltf.animations[6]);
+  //   action.play();
+  // });
+
   // 加载kago5
-  // const startTime = new Date().getTime()
-  // const loader2 = new GLTFLoader().setPath('/models/kago5/');
-
-  // loader2.load('kago5.gltf', function (gltf) {
-  //   const time = new Date().getTime()
-
+  // const loader5 = new GLTFLoader().setPath('/models/kago5/');
+  // loader5.load('kago5.gltf', function (gltf) {
   //   gltf.scene.scale.set(2, 2, 2);
   //   gltf.scene.rotateY(-Math.PI * 0.8);
   //   scene.add(gltf.scene);
@@ -90,9 +116,8 @@ export function init() {
     console.log('intersects', intersects);
 
     if (intersects.length > 0) {
-      console.log(intersects[0].object);
       // @ts-ignore
-      // intersects[0].object.material.color.set(0xff0000);
+      intersects[0].object.material.color.set(0xff0000);
     }
   });
 
@@ -105,6 +130,11 @@ export function init() {
 
   function render() {
     requestAnimationFrame(render);
+
+    const delta = clock.getDelta();
+    if (mixer) {
+      mixer.update(delta);
+    }
 
     renderer.render(scene, camera);
   }

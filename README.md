@@ -111,6 +111,12 @@ https://www.jianshu.com/p/905671909b25
 减面和导出法线贴图、颜色贴图、金属粗糙贴图
 http://www.yanhuangxueyuan.com/doc/Three.js/ModelTooBig.html
 
+**Three.js边界线框EdgesGeometry**
+http://www.yanhuangxueyuan.com/doc/Three.js/EdgesGeometry.html
+
+**Three.js教程**
+http://www.yanhuangxueyuan.com/Three.js_course.html
+
 **如何在页面极速渲染3D模型**
 https://cloud.tencent.com/developer/article/1552903
 
@@ -134,3 +140,8 @@ https://zhuanlan.zhihu.com/p/154425898
 https://zhuanlan.zhihu.com/p/25400458
 
 使用**UV映射**将一张纹理贴图映射到不同面或不同位置。对于复杂对象，可以在建模时建立好模型贴图。
+
+## 例子
+
+教你用three.js写一个炫酷的3D登陆页面
+https://juejin.cn/post/7020571868314730532
