@@ -50,36 +50,30 @@ export function init() {
   // );
 
   // 加载直立机器人
-  // const loader3 = new GLTFLoader().setPath('/models/biped_robot/')
-  // loader3.load('scene.gltf', function(gltf) {
-  //   console.log('robot gltf', gltf)
-  //   robot = gltf.scene;
-  //   gltf.scene.scale.set(0.5, 0.5, 0.5);
-  //   gltf.scene.position.x += 50;
-  //   scene.add(gltf.scene);
-  // })
+  const loader3 = new GLTFLoader().setPath('/models/biped_robot/')
+  loader3.load('scene.gltf', function(gltf) {
+    console.log('robot gltf', gltf)
+    robot = gltf.scene;
+    gltf.scene.scale.set(0.5, 0.5, 0.5);
+    gltf.scene.position.x += 50;
+    scene.add(gltf.scene);
+  })
 
   // 加载kago5
-  const startTime = new Date().getTime()
-  console.log('start_time-1', startTime);
-  const loader2 = new GLTFLoader().setPath('/models/kago5/');
+  // const startTime = new Date().getTime()
+  // const loader2 = new GLTFLoader().setPath('/models/kago5/');
 
-  loader2.load('kago5.gltf', function (gltf) {
-    const time = new Date().getTime()
-    console.log('success_time', (time - startTime) / 1000)
+  // loader2.load('kago5.gltf', function (gltf) {
+  //   const time = new Date().getTime()
 
-    // console.log(gltf);
-    gltf.scene.scale.set(2, 2, 2);
-    gltf.scene.rotateY(-Math.PI * 0.8);
-    scene.add(gltf.scene);
-  }, function(xhr) {
-    const time = new Date().getTime()
-    console.log('load_time', (time - startTime) / 1000)
-    console.log('loaded', xhr.loaded)
-    console.log('xhr', xhr);
-  }, function(err) {
-    console.log('err', err);
-  });
+  //   gltf.scene.scale.set(2, 2, 2);
+  //   gltf.scene.rotateY(-Math.PI * 0.8);
+  //   scene.add(gltf.scene);
+  // }, function(xhr) {
+  //   console.log('loaded', xhr.loaded)
+  // }, function(err) {
+  //   console.log('err', err);
+  // });
 
   render();
 

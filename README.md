@@ -97,14 +97,15 @@ http://www.360doc.com/content/20/0809/11/65097895_929317137.shtml
 ThreeJs做智慧城市项目后记
 https://www.daimajiaoliu.com/daima/4797a15af1003f8
 
-三维文件格式知多少
+三维文件格式知多少(.gltf .glb .fbx .obj)
 http://www.bgteach.com/article/132
 
 three.js 怎么点击加载完成的gltf模型
 https://segmentfault.com/q/1010000015893234
 
-glTF格式详解(.gltf .glb .fbx .obj)
-https://zhuanlan.zhihu.com/p/65265611
+**gltf模型详解**
+内存占用分析，性能优化
+https://www.jianshu.com/p/905671909b25
 
 **Three.js模型加载速度(模型太大)**
 减面和导出法线贴图、颜色贴图、金属粗糙贴图
@@ -115,3 +116,21 @@ https://cloud.tencent.com/developer/article/1552903
 
 Threejs大型obj文件的秒加载实现
 https://www.jianshu.com/p/5c2cafcea26c
+
+ThreeJS性能优化 - 减面（THREE.SimplifyModifier）
+https://zhuanlan.zhihu.com/p/360260878
+https://github.com/mrdoob/three.js/blob/master/examples/webgl_modifier_simplifier.html
+
+Threejs效果调参在调什么？
+https://zhuanlan.zhihu.com/p/142773940
+
+专栏：threejs知多少
+https://www.zhihu.com/column/c_1246830299226718208
+
+**也聊webgl中的大场景性能优化**
+https://zhuanlan.zhihu.com/p/154425898
+
+**ThreeJS与建模人员的合作方式**
+https://zhuanlan.zhihu.com/p/25400458
+
+使用**UV映射**将一张纹理贴图映射到不同面或不同位置。对于复杂对象，可以在建模时建立好模型贴图。
