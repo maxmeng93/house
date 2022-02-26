@@ -2,9 +2,8 @@ import * as THREE from 'three';
 import Stats from 'stats.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { initCamera, initRenderer, initLight, initAxes } from '../utils';
-import Building from './building';
 
-export function init() {
+export default function init() {
   const container = document.getElementById('webgl-output') as HTMLElement;
   // 场景
   const scene = new THREE.Scene();
@@ -22,49 +21,13 @@ export function init() {
 
   // 渲染器
   const renderer = initRenderer(window.innerWidth, window.innerHeight);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+	renderer.toneMappingExposure = 1;
+	renderer.outputEncoding = THREE.sRGBEncoding;
 
   new OrbitControls(camera, renderer.domElement);
   container.appendChild(renderer.domElement);
 
-  new Building(scene, {
-    number: 3,
-    floor: [
-      {
-        width: 50,
-        height: 10,
-        depth: 50,
-        thickness: 0.5,
-      },
-      {
-        width: 50,
-        height: 10,
-        depth: 50,
-        thickness: 0.5,
-      },
-    ],
-    elevator: [
-      {
-        start: 1,
-        end: 2,
-        width: 8,
-        height: 10,
-        depth: 8,
-        x: 10,
-        z: -10,
-      },
-      {
-        start: 2,
-        end: 3,
-        width: 8,
-        height: 10,
-        depth: 8,
-        x: -10,
-        z: -10,
-      },
-    ],
-  });
-
-  render();
 
   window.addEventListener('resize', function () {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -75,7 +38,6 @@ export function init() {
 
   function render() {
     requestAnimationFrame(render);
-
     renderer.render(scene, camera);
   }
 }

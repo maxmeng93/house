@@ -145,3 +145,12 @@ https://zhuanlan.zhihu.com/p/25400458
 
 教你用three.js写一个炫酷的3D登陆页面
 https://juejin.cn/post/7020571868314730532
+
+**用 Three.js 写了一个涵盖了大部分基础3D功能的综合场景**
+https://juejin.cn/post/7016920595623313416
+
+2天赚了4个W，手把手教你用Threejs搭建一个Web3D汽车展厅！
+https://juejin.cn/post/6981249521258856456
+
+可视化大屏-用threejs撸一个3d中国地图
+https://juejin.cn/post/7057808453263163422

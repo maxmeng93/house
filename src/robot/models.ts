@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { GUI } from 'dat.gui';
 
 /**
  * 
@@ -48,6 +49,21 @@ export function module2(scene: THREE.Scene) {
 
 // 大黄蜂模型
 export function module3(scene: THREE.Scene) {
+  function gui() {
+    // @ts-ignore
+    const controls = new function() {
+      // @ts-ignore
+      this.showAxes = false;
+      // @ts-ignore
+      this.showRoof = true;
+    }()
+
+    const ui = new GUI();
+    ui.add(controls, 'showAxes');
+    ui.add(controls, 'showRoof');
+
+    return controls;
+  }
 
   return loadGltfModule({ path: '/models/biped_robot/', gltf: 'scene.gltf' }).then((gltf: any) => {
     const robot = gltf.scene;
@@ -63,7 +79,7 @@ export function module3(scene: THREE.Scene) {
     const mixer = new THREE.AnimationMixer(robot);
     mixer.clipAction(gltf.animations[0]).play();
 
-    return { robot, mixer };
+    return { robot, mixer, gui: gui() };
   })
 }
 

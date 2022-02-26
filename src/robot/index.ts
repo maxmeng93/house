@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import Stats from 'stats.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { initCamera, initRenderer, initLight, initAxes } from './utils';
+import { initCamera, initRenderer, initLight, initAxes } from '../utils';
 import { module1, module2, module3, module4, kago5 } from './models';
 
 export function init() {
@@ -60,9 +60,9 @@ export function init() {
 
     raycaster.setFromCamera(mouse, camera);
     var intersects = raycaster.intersectObjects(robot.children);
-    console.log('intersects', intersects);
-
+    
     if (intersects.length > 0) {
+      console.log('intersects', intersects);
       // @ts-ignore
       intersects[0].object.material.color.set(0xff0000);
     }
