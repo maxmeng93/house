@@ -1,13 +1,5 @@
 import * as THREE from 'three';
-
-// 计算网格中心坐标
-export function calcPosition(
-  volume: { width: number; height: number; depth: number },
-  coordinate: { x: number; y: number; z: number }
-) {
-  const { width, height, depth } = volume;
-  const { x, y, z } = coordinate;
-}
+import Stats from 'stats.js';
 
 // 坐标轴
 export function initAxes(group: THREE.Group | THREE.Scene, size?: number) {
@@ -19,6 +11,8 @@ export function initAxes(group: THREE.Group | THREE.Scene, size?: number) {
 export function initCamera({
   position,
   lookAt,
+  near = 0.1,
+  far = 1000
 }: {
   position: {
     x: number;
@@ -26,8 +20,10 @@ export function initCamera({
     z: number;
   };
   lookAt: THREE.Vector3;
+  near?: number;
+  far?: number;
 }) {
-  const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+  const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, near, far);
 
   const { x, y, z } = position;
   camera.position.set(x, y, z);
@@ -72,4 +68,13 @@ export function initLight(scene: THREE.Scene) {
     ambientLight,
     directionalLight,
   };
+}
+
+/**
+ * 初始化性能监控器
+ * @param container 
+ */
+export function initStats(container: HTMLElement) {
+  const stats = new Stats();
+  container.appendChild(stats.dom);
 }
