@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import { HashRouter, Routes, Route, Link } from 'react-router-dom';
 import { init as houseInit } from './house';
 import { init as robotInit } from './robot';
-import { init as mapInit } from './map';
+// import { init as mapInit } from './map';
 import { init as yogoInit } from './yogo';
+import MapPage from './map';
 
 const Home = () => {
   return (
@@ -38,7 +39,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/house" element={<WebglOutput init={houseInit} />} />
       <Route path="/robot" element={<WebglOutput init={robotInit} />} />
-      <Route path="/map" element={<WebglOutput init={mapInit} />} />
+      <Route path="/map" element={<MapPage />} />
       <Route path="/yogo" element={<WebglOutput init={yogoInit} />} />
       <Route
         path="*"
