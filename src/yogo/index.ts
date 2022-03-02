@@ -39,22 +39,7 @@ function getFloorTexture(img: string, index: number) {
   });
 }
 
-function tag(origin: { x: number, y: number, z: number }, boxMesh: THREE.Object3D, camera: THREE.Camera) {
-  
-  const x = 0;
-  const y = 0;
-  const z = 0;
 
-  // 世界坐标
-  const worldVector = new THREE.Vector3(x, y, z);
-  const standardVector = worldVector.project(camera);//世界坐标转标准设备坐标
-  const a = window.innerWidth / 2;
-  const b = window.innerHeight / 2;
-  const x1 = Math.round(standardVector.x * a + a);//标准设备坐标转屏幕坐标
-  const y1 = Math.round(-standardVector.y * b + b);//标准设备坐标转屏幕坐标
-  
-  console.log(x1, y1);
-}
 
 /**
  * 渲染标记点
