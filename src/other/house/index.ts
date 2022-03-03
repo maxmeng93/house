@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import Stats from 'stats.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { initCamera, initRenderer, initLight, initAxes } from '../utils';
+import { initCamera, initRenderer, initLight, initAxes } from '../../utils';
 import Building from './building';
 
 export function init() {

@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { HashRouter, Routes, Route, Link } from 'react-router-dom';
-import { init as houseInit } from './house';
-import { init as robotInit } from './robot';
-// import { init as mapInit } from './map';
-import { init as yogoInit } from './yogo';
-import MapPage from './map';
+import { init as houseInit } from './other/house';
+import { init as robotInit } from './other/robot';
+import { init as yogoInit } from './other/yogo';
+import MapPage from './pages';
 
 const Home = () => {
   return (

@@ -5,7 +5,6 @@ import f1 from './images/1f.png';
 import f2 from './images/2f.png';
 import f3 from './images/3f.png';
 import { points } from './data';
-import { Camera } from 'three';
 
 /**
  * 获取楼层地图，并将楼层编号画到地图上，并生成纹理

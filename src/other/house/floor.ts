@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { CSG } from 'three-csg-ts';
-import { initAxes } from '../utils';
+import { initAxes } from '../../utils';
 import skyPanoImg from './img/sky-dome-panorma.jpg';
 // import textureImg from './img/Bricks074_1K/Bricks074_1K_Color.jpg';
 import wallImg from './img/Bricks066_1K/Bricks066_1K_Color.jpg';

@@ -72,8 +72,6 @@ function operationData(scene: THREE.Scene, chinaJson: any) {
       });
     });
 
-    console.log('a')
-
     scene.add(province);
   });
 }
