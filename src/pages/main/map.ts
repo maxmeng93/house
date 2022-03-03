@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import Stats from 'stats.js';
 import * as d3 from 'd3';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { initCamera, initRenderer, initLight, initAxes } from '../utils';
+import { initCamera, initRenderer, initLight, initAxes } from '../../utils';
 import geoJson from './china.json';
 
 const COLOR_ARR = ['#0465BD', '#357bcb', '#3a7abd'];
@@ -15,9 +15,15 @@ function operationData(scene: THREE.Scene, chinaJson: any) {
   chinaJson.features.forEach((elem: any, index: number) => {
     // 省份
     const province = new THREE.Object3D();
-    const { coordinates } = elem.geometry;
+    const { coordinates, type } = elem.geometry;
     const color = COLOR_ARR[index % COLOR_ARR.length];
-    // 循环坐标数组
+
+    if (type === 'MultiPolygon') {
+      // 
+    } else if (type === 'Polygon') {
+      //
+    }
+    
     coordinates.forEach((multiPolygon: [number, number][][]) => {
       multiPolygon.forEach((polygon: [number, number][]) => {
         const shape = new THREE.Shape();
@@ -26,9 +32,9 @@ function operationData(scene: THREE.Scene, chinaJson: any) {
           let [x, y] = projection(polygon[i]) as [number, number];
           if (isNaN(x)) {
             // 内蒙古数据少一层
-            console.log(polygon[i])
-            console.log(elem.geometry)
-            console.log(elem.properties)
+            // console.log(polygon[i])
+            // console.log(elem.geometry)
+            // console.log(elem.properties)
             continue;
           }
 
@@ -59,13 +65,12 @@ function operationData(scene: THREE.Scene, chinaJson: any) {
           color: color,
         });
 
-        const mesh = new THREE.Mesh(geometry, material);
-        // const mesh = new THREE.Mesh(geometry, [material, material1]);
-        // // 设置高度将省区分开来
-        // if (index % 2 === 0) {
-        //   mesh.scale.set(1, 1, 1.2);
-        // }
-        // // 给mesh开启阴影
+        const mesh = new THREE.Mesh(geometry, [material, material1]);
+        // 设置高度将省区分开来
+        if (index % 2 === 0) {
+          mesh.scale.set(1, 1, 1.2);
+        }
+        // 给mesh开启阴影
         // mesh.castShadow = true;
         // mesh.receiveShadow = true;
         province.add(mesh);

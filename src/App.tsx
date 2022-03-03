@@ -3,7 +3,7 @@ import { HashRouter, Routes, Route, Link } from 'react-router-dom';
 import { init as houseInit } from './other/house';
 import { init as robotInit } from './other/robot';
 import { init as yogoInit } from './other/yogo';
-import MapPage from './pages';
+import Main from './pages/main';
 
 const Home = () => {
   return (
@@ -38,7 +38,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/house" element={<WebglOutput init={houseInit} />} />
       <Route path="/robot" element={<WebglOutput init={robotInit} />} />
-      <Route path="/map" element={<MapPage />} />
+      <Route path="/map" element={<Main />} />
       <Route path="/yogo" element={<WebglOutput init={yogoInit} />} />
       <Route
         path="*"
