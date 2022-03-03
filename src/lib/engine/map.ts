@@ -18,37 +18,38 @@ export class Map extends Engine {
    * @param data 符合 GeoJSON 标准的数据 
    */
   renderMap(data: GeoJSON.FeatureCollection) {
-    console.log(data);
     data.features.forEach((feature: GeoJSON.Feature, index: number) => {
-      // 省份
-      const province = new THREE.Group();
+      const group = new THREE.Group();
       const { geometry, properties } = feature;
       //@ts-ignore
       const { coordinates, type } = geometry;
 
       if (type === 'MultiPolygon') {
+
         coordinates.forEach((multiPolygon: any) => {
           multiPolygon.forEach((polygon: any) => {
-            this.drawShape(province, polygon);
+            this.drawShape(group, polygon, index);
           });
         });
         
       } else if (type === 'Polygon') {
+
         coordinates.forEach((polygon: any) => {
-          this.drawShape(province, polygon);
+          this.drawShape(group, polygon, index);
         });
+
       } else {
+
         console.warn(`第${index + 1}项数据，type 应该是 "MultiPolygon"、"Polygon" 之一。`);
+      
       }
-      console.log(province);
-      this.scene.add(province);
+      this.scene.add(group);
     });
 
   }
 
   // 绘制形状
-  private drawShape(province: THREE.Group, polygon: any) {
-    const color = '#0465BD';
+  private drawShape(group: THREE.Group, polygon: any, index: number) {
 
     const shape = new THREE.Shape();
     for (let i = 0; i < polygon.length; i++) {
@@ -59,6 +60,13 @@ export class Map extends Engine {
       shape.lineTo(x, -y);
     }
 
+    this.extrudeGeometry(group, shape, index);
+  }
+
+  // 将2D形状拉伸为3D几何体
+  private extrudeGeometry(group: THREE.Group, shape: any, index: number) {
+    const color = COLOR_ARR[index % COLOR_ARR.length];
+
     const extrudeSettings = {
       depth: 4,
       bevelEnabled: true,
@@ -68,12 +76,10 @@ export class Map extends Engine {
 
     const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
 
-    // 平面部分材质
     const material = new THREE.MeshStandardMaterial({
       metalness: 1,
       color: color,
     });
-    // 拉高部分材质
     const material1 = new THREE.MeshStandardMaterial({
       metalness: 1,
       roughness: 1,
@@ -82,17 +88,10 @@ export class Map extends Engine {
 
     const mesh = new THREE.Mesh(geometry, [material, material1]);
     // 设置高度将省区分开来
-    // if (index % 2 === 0) {
-    //   mesh.scale.set(1, 1, 1.2);
-    // }
-    // 给mesh开启阴影
-    // mesh.castShadow = true;
-    // mesh.receiveShadow = true;
-    province.add(mesh);
-  }
+    if (index % 2 === 0) {
+      mesh.scale.set(1, 1, 1.2);
+    }
 
-  // 将2D形状拉伸为3D几何体
-  private extrudeGeometry() {
-
+    group.add(mesh);
   }
 }

@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import Stats from 'stats.js';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 // 3D引擎
 export class Engine {
@@ -28,34 +29,25 @@ export class Engine {
     this.height = height;
 
     this.scene = new THREE.Scene();
-    this.camera = this.initCamera({x: 1000, y: 1000, z: 1000});
+    this.camera = this.initCamera({x: 0, y: 0, z: 150});
     this.renderer = this.initRenderer();
     this.light = this.initLight();
 
     this.container.appendChild(this.renderer.domElement);
 
-    this.render();
-
-    // this.onEvent();
+    this.addControls();
+    this.onEvent();
     this.renderScene();
-  }
-
-  render() {
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    const cube = new THREE.Mesh(geometry, material);
-    this.scene.add(cube);
-    console.log(this.scene);
   }
 
   // 事件监听
   onEvent() {
-    window.addEventListener('resize', this.onResize);
+    window.addEventListener('resize', this.onResize.bind(this));
   }
 
   // 移除事件监听
   offEvent() {
-    window.removeEventListener('resize', this.onResize);
+    window.removeEventListener('resize', this.onResize.bind(this));
   }
 
   // 当页面调整尺寸时
@@ -73,10 +65,17 @@ export class Engine {
     this.container.appendChild(stats.dom);
   }
 
-  addAxes(size = 10) {
-    console.log('addAxes')
+  addAxes(size = 30) {
     const axes = new THREE.AxesHelper(size);
     this.scene.add(axes);
+  }
+
+  // 添加鼠标控制器
+  addControls() {
+    const controls = new OrbitControls(this.camera, this.renderer.domElement);
+    // 锁定x轴旋转角度
+    // controls.minPolarAngle = 0;
+    // controls.maxPolarAngle = Math.PI/2;
   }
 
   // 渲染场景
@@ -87,7 +86,7 @@ export class Engine {
 
   initCamera(
     position: { x: number, y: number; z: number }, 
-    { fov, near, far } = { fov: 60, near: 0.1, far: 1000 }
+    { fov, near, far } = { fov: 45, near: 0.1, far: 1000 }
   ): THREE.PerspectiveCamera {
     const camera = new THREE.PerspectiveCamera(fov, this.width / this.height, near, far);
 
@@ -99,7 +98,7 @@ export class Engine {
   }
 
   initRenderer() {
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    const renderer = new THREE.WebGLRenderer();
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(this.width, this.height);
     renderer.setClearColor(0xffffff, 0);
