@@ -4,6 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 // 3D引擎
 export class Engine {
+  // 画布容器
   container: HTMLElement;
   // 画布宽度
   width: number;
@@ -65,6 +66,7 @@ export class Engine {
     this.container.appendChild(stats.dom);
   }
 
+  // 添加参考线
   addAxes(size = 30) {
     const axes = new THREE.AxesHelper(size);
     this.scene.add(axes);

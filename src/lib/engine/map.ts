@@ -4,6 +4,8 @@ import { Engine } from './engine';
 
 const COLOR_ARR = ['#0465BD', '#357bcb', '#3a7abd'];
 
+// 北京 116.412318, 39.909843
+// yogo 121.464323, 31.29927
 // 墨卡托投影转换
 const projection = d3.geoMercator().center([104.0, 37.5]).scale(80).translate([0, 0]);
 
@@ -68,7 +70,7 @@ export class Map extends Engine {
     const color = COLOR_ARR[index % COLOR_ARR.length];
 
     const extrudeSettings = {
-      depth: 4,
+      depth: 1,
       bevelEnabled: true,
       bevelSegments: 1,
       bevelThickness: 0.2,

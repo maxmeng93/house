@@ -8,7 +8,6 @@ export default function MapPage() {
     if (domRef.current) {
       const map = new Map(domRef.current);
       map.openStats();
-      map.addAxes();
       map.renderMap(data as GeoJSON.FeatureCollection);
     }
   }, [domRef])
