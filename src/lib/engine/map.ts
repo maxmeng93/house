@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import * as d3 from 'd3';
 import { Engine } from './engine';
+import type { IPoint } from './types';
 
 const COLOR_ARR = ['#0465BD', '#357bcb', '#3a7abd'];
 
@@ -10,9 +11,11 @@ const COLOR_ARR = ['#0465BD', '#357bcb', '#3a7abd'];
 const projection = d3.geoMercator().center([104.0, 37.5]).scale(80).translate([0, 0]);
 
 export class Map extends Engine {
+  // 标记点
+  points: IPoint[] = [];
+
   constructor(container: HTMLElement, width = window.innerWidth, height = window.innerHeight) {
     super(container, width, height);
-
   }
 
   /**
@@ -27,33 +30,27 @@ export class Map extends Engine {
       const { coordinates, type } = geometry;
 
       if (type === 'MultiPolygon') {
-
         coordinates.forEach((multiPolygon: any) => {
           multiPolygon.forEach((polygon: any) => {
             this.drawShape(group, polygon, index);
           });
         });
-        
       } else if (type === 'Polygon') {
-
         coordinates.forEach((polygon: any) => {
           this.drawShape(group, polygon, index);
         });
-
       } else {
-
         console.warn(`第${index + 1}项数据，type 应该是 "MultiPolygon"、"Polygon" 之一。`);
-      
       }
       this.scene.add(group);
     });
 
   }
 
-  // 绘制形状
+  // 绘制2D形状
   private drawShape(group: THREE.Group, polygon: any, index: number) {
-
     const shape = new THREE.Shape();
+
     for (let i = 0; i < polygon.length; i++) {
       let [x, y] = projection(polygon[i]) as [number, number];
       if (i === 0) {
@@ -95,5 +92,45 @@ export class Map extends Engine {
     }
 
     group.add(mesh);
+  }
+
+  // 标记点
+  markPoint(coord: [number, number]) {
+    let [x, y] = projection(coord) as [number, number];
+    console.log(x, y);
+    console.log('0.0', projection([104.0, 37.5]))
+    this.renderPoint(x, -y);
+  }
+
+  renderPoint(x: number, y: number) {
+    const geometry = new THREE.BoxGeometry(2, 2, 2);
+    const material = new THREE.MeshPhongMaterial({color: 0xff0000});
+    const p = new THREE.Mesh(geometry, material);
+    p.position.set(x, y, 0);
+    this.scene.add(p);
+    console.log(p)
+
+    // 标点的世界坐标
+    const worldPosition = new THREE.Vector3();
+    p.getWorldPosition(worldPosition);
+
+    // 设备坐标
+    const standardVector = worldPosition.project(this.camera);
+
+    const a = window.innerWidth / 2;
+    const b = window.innerHeight / 2;
+    const x1 = Math.round(standardVector.x * a + a);
+    const y1 = Math.round(-standardVector.y * b + b);//标准设备坐标转屏幕坐标
+    const div = document.createElement('div');
+    div.style.width = '20px';
+    div.style.height = '20px';
+    div.style.background = 'rgba(0, 225, 223, 0.5)';
+    div.style.position = 'fixed';
+    div.style.left = `${x1}px`;
+    div.style.top = `${y1}px`;
+    div.style.transform = 'translate(-50%, -50%)';
+    div.style.borderRadius = '50%';
+    document.body.appendChild(div);
+
   }
 }

@@ -57,14 +57,11 @@ function renderPoint(origin: { x: number, y: number, z: number }, group: THREE.O
     
     group.add(p);
 
-    console.log('p', p)
     // 标点的世界坐标
     const worldPosition = new THREE.Vector3();
-    console.log('p', p.getWorldPosition(worldPosition));
-    console.log(worldPosition)
+    p.getWorldPosition(worldPosition)
     // 设备坐标
     const standardVector = worldPosition.project(camera);
-    console.log('standardVector', standardVector)
 
     const a = window.innerWidth / 2;
     const b = window.innerHeight / 2;
