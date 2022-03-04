@@ -1,21 +1,18 @@
 import * as THREE from 'three';
-import * as d3 from 'd3';
 import { Engine } from './engine';
 import type { IPoint } from './types';
 
 const COLOR_ARR = ['#0465BD', '#357bcb', '#3a7abd'];
 
-// 北京 116.412318, 39.909843
-// yogo 121.464323, 31.29927
-// 墨卡托投影转换
-const projection = d3.geoMercator().center([104.0, 37.5]).scale(80).translate([0, 0]);
-
 export class Map extends Engine {
   // 标记点
   points: IPoint[] = [];
-
-  constructor(container: HTMLElement, width = window.innerWidth, height = window.innerHeight) {
+  // 墨卡托投影转换方法
+  projection: Function;
+  
+  constructor(container: HTMLElement, projection: Function, width = window.innerWidth, height = window.innerHeight ) {
     super(container, width, height);
+    this.projection = projection;
   }
 
   /**
@@ -25,7 +22,7 @@ export class Map extends Engine {
   renderMap(data: GeoJSON.FeatureCollection) {
     data.features.forEach((feature: GeoJSON.Feature, index: number) => {
       const group = new THREE.Group();
-      const { geometry, properties } = feature;
+      const { geometry } = feature;
       //@ts-ignore
       const { coordinates, type } = geometry;
 
@@ -52,7 +49,7 @@ export class Map extends Engine {
     const shape = new THREE.Shape();
 
     for (let i = 0; i < polygon.length; i++) {
-      let [x, y] = projection(polygon[i]) as [number, number];
+      let [x, y] = this.projection(polygon[i]) as [number, number];
       if (i === 0) {
         shape.moveTo(x, -y);
       }
@@ -96,9 +93,7 @@ export class Map extends Engine {
 
   // 标记点
   markPoint(coord: [number, number]) {
-    let [x, y] = projection(coord) as [number, number];
-    console.log(x, y);
-    console.log('0.0', projection([104.0, 37.5]))
+    let [x, y] = this.projection(coord) as [number, number];
     this.renderPoint(x, -y);
   }
 
@@ -108,7 +103,6 @@ export class Map extends Engine {
     const p = new THREE.Mesh(geometry, material);
     p.position.set(x, y, 0);
     this.scene.add(p);
-    console.log(p)
 
     // 标点的世界坐标
     const worldPosition = new THREE.Vector3();

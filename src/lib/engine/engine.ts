@@ -18,6 +18,8 @@ export class Engine {
   camera: THREE.PerspectiveCamera;
   // 平行光
   light: THREE.Light | null = null;
+  // 轨道控制器
+  orbitControls!: OrbitControls;
 
   constructor(
     container: HTMLElement, 
@@ -73,11 +75,15 @@ export class Engine {
   }
 
   // 添加鼠标控制器
-  addControls() {
-    const controls = new OrbitControls(this.camera, this.renderer.domElement);
+  addControls(): OrbitControls {
+    const orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
+
     // 锁定x轴旋转角度
     // controls.minPolarAngle = 0;
     // controls.maxPolarAngle = Math.PI/2;
+    this.orbitControls = orbitControls;
+
+    return orbitControls;
   }
 
   // 渲染场景
