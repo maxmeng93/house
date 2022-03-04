@@ -30,7 +30,7 @@ export default function MarkPoint(props: IMarkPointProps) {
       {
         data.map(item => {
           const { left, top } = item;
-          return <Point left={left} top={top}></Point>;
+          return <Point key={`${left}+${top}`} left={left} top={top}></Point>;
         })
       }
     </div>
