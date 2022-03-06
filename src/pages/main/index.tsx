@@ -22,18 +22,22 @@ export default function MapPage() {
 
       map.openStats();
       map.renderMap(data as GeoJSON.FeatureCollection);
-      // map.markPoint([121.464323, 31.29927]);
 
       const point = new Point(map.camera, map.projection, 'map');
-      const p = point.setPoints([{ long: 121.464323, lat: 31.29927 }, { long: 116.412318, lat: 39.909843 }]);
-      console.log(p);
-      console.log(point);
+      const p = point.setPoints([
+        { long: 121.464323, lat: 31.29927, name: 'YOGO' }, 
+        { long: 116.412318, lat: 39.909843, name: '北京' }
+      ]);
+
       setPoints(p);
 
       console.log('map', map)
 
       map.orbitControls.addEventListener('change', () => {
-        console.log('change')
+        setPoints(point.update());
+      });
+
+      window.addEventListener('resize', () => {
         setPoints(point.update());
       });
     }

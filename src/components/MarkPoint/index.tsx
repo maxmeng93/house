@@ -1,8 +1,6 @@
 import React from 'react';
 import styles from './index.module.scss';
 
-console.log(styles);
-
 interface IPointProps {
   left: number;
   top: number;
@@ -26,13 +24,14 @@ export default function MarkPoint(props: IMarkPointProps) {
   const { data } = props;
 
   return (
-    <div className={styles.wrap}>
+    // <div className={styles.wrap}>
+    <>
       {
-        data.map(item => {
+        data.map((item, index) => {
           const { left, top } = item;
-          return <Point key={`${left}+${top}`} left={left} top={top}></Point>;
+          return <Point key={index} left={left} top={top}></Point>;
         })
       }
-    </div>
+    </>
   );
 };

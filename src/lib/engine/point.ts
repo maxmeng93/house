@@ -16,8 +16,8 @@ export class Point {
   }
 
   public setPoints(data: any[]) {
+    console.log('aaaadata', data)
     if (this.type === 'map') {
-      console.log('map')
       return this.setMapPoints(data);
     } else {
       return this.setNormalPoints(data);
@@ -50,7 +50,7 @@ export class Point {
       const left = Math.round(standardVector.x * a + a);
       const top = Math.round(-standardVector.y * b + b);
 
-      return { left, top };
+      return {...item, left, top };
     });
 
     this.points = arr;
