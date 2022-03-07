@@ -24,5 +24,5 @@ export interface IPoint {
   /** 点位名称 */
   name: string;
   /** 点位其他信息 */
-  [key?: string]: any;
+  [key: string]: any;
 }

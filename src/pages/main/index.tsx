@@ -5,8 +5,6 @@ import data from './china.json';
 import styles from './style/index.module.scss';
 import MarkPoint from '@/components/MarkPoint';
 
-// 北京 116.412318, 39.909843
-// yogo 121.464323, 31.29927
 const projection = d3.geoMercator().center([104.0, 37.5]).scale(80).translate([0, 0]);
 
 export default function MapPage() {
@@ -19,19 +17,17 @@ export default function MapPage() {
     if (domRef.current) {
       const map = new Map(domRef.current, projection);
 
-
       map.openStats();
+      map.addOrbitControls();
       map.renderMap(data as GeoJSON.FeatureCollection);
 
       const point = new Point(map.camera, map.projection, 'map');
       const p = point.setPoints([
         { long: 121.464323, lat: 31.29927, name: 'YOGO' }, 
-        { long: 116.412318, lat: 39.909843, name: '北京' }
+        { long: 116.40355, lat: 39.923402, name: '北京' }
       ]);
 
       setPoints(p);
-
-      console.log('map', map)
 
       map.orbitControls.addEventListener('change', () => {
         setPoints(point.update());
@@ -43,12 +39,16 @@ export default function MapPage() {
     }
   }, [domRef]);
 
+  const clickName = (data: any) => {
+    console.log(data);
+  }
+
   return (
     <div>
       <div className={styles.container3d} ref={domRef}>
         <div className={styles.left}></div>
         <div className={styles.right}></div>
-        <MarkPoint data={points}></MarkPoint>
+        <MarkPoint data={points} clickName={clickName}></MarkPoint>
       </div>
     </div>
   );

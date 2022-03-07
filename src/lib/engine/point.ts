@@ -38,7 +38,7 @@ export class Point {
   // 设置普通点
   private setNormalPoints(data: any[]) {
     const arr = data.map(item => {
-      const { x, y, z = 0.5 } = item;
+      const { x, y, z = 1.5 } = item;
       const worldPosition = new THREE.Vector3(x, y, z);
   
       const standardVector = worldPosition.project(this.camera);

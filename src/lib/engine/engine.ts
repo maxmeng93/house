@@ -32,13 +32,14 @@ export class Engine {
     this.height = height;
 
     this.scene = new THREE.Scene();
-    this.camera = this.initCamera({x: 0, y: 0, z: 150});
+    this.camera = this.initCamera({x: 0, y: 0, z: 120});
     this.renderer = this.initRenderer();
     this.light = this.initLight();
 
+    console.log(this.renderer.domElement);
+
     this.container.appendChild(this.renderer.domElement);
 
-    this.addControls();
     this.onEvent();
     this.renderScene();
   }
@@ -72,10 +73,11 @@ export class Engine {
   addAxes(size = 30) {
     const axes = new THREE.AxesHelper(size);
     this.scene.add(axes);
+    return axes;
   }
 
   // 添加鼠标控制器
-  addControls(): OrbitControls {
+  addOrbitControls(): OrbitControls {
     const orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
 
     // 锁定x轴旋转角度

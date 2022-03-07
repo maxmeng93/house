@@ -1,37 +1,50 @@
 import React from 'react';
 import styles from './index.module.scss';
 
-interface IPointProps {
+interface IPoint {
   left: number;
   top: number;
-  name: string;
+  name?: string;
+  [key: string]: any;
+}
+
+interface IPointProps {
+  data: IPoint;
+  showName?: boolean;
+  clickName?: Function;
 }
 
 function Point(props: IPointProps) {
-  const { left, top, name } = props;
+  const { data, showName = true, clickName } = props;
+  const { left, top, name } = data;
+
+  const clickNameHandler = () => {
+    clickName?.(data);
+  }
+
   return (
     <div 
       className={styles.point} 
       style={{ left, top }}
     >
-      <div className={styles.tip}>{name}</div>
+      {showName && name ? <div className={styles.name} onClick={clickNameHandler}>{name}</div> : null} 
     </div>
   );
 }
 
 interface IMarkPointProps {
-  data: any[];
+  data: IPoint[];
+  clickName?: Function;
 }
 
 export default function MarkPoint(props: IMarkPointProps) {
-  const { data } = props;
+  const { data, clickName } = props;
 
   return (
     <>
       {
         data.map((item, index) => {
-          const { left, top, name } = item;
-          return <Point key={index} left={left} top={top} name={name}></Point>;
+          return <Point key={index} data={item} clickName={clickName}></Point>;
         })
       }
     </>
