@@ -14,4 +14,13 @@
   background: #faf;
   border-radius: 50%;
   cursor: pointer;
+  .tip {
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    min-width: 2em;
+    max-width: 5em;
+    transform: translate(-50%, -50%);
+    background: #fff;
+  }
 }

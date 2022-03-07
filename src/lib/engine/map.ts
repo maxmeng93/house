@@ -29,12 +29,14 @@ export class Map extends Engine {
       if (type === 'MultiPolygon') {
         coordinates.forEach((multiPolygon: any) => {
           multiPolygon.forEach((polygon: any) => {
-            this.drawShape(group, polygon, index);
+            this.drawShape(group, polygon);
+            this.drawLine(group, polygon);
           });
         });
       } else if (type === 'Polygon') {
         coordinates.forEach((polygon: any) => {
-          this.drawShape(group, polygon, index);
+          this.drawShape(group, polygon);
+          this.drawLine(group, polygon);
         });
       } else {
         console.warn(`第${index + 1}项数据，type 应该是 "MultiPolygon"、"Polygon" 之一。`);
@@ -45,7 +47,7 @@ export class Map extends Engine {
   }
 
   // 绘制2D形状
-  private drawShape(group: THREE.Group, polygon: any, index: number) {
+  private drawShape(group: THREE.Group, polygon: any) {
     const shape = new THREE.Shape();
 
     for (let i = 0; i < polygon.length; i++) {
@@ -56,12 +58,12 @@ export class Map extends Engine {
       shape.lineTo(x, -y);
     }
 
-    this.extrudeGeometry(group, shape, index);
+    this.extrudeGeometry(group, shape);
   }
 
   // 将2D形状拉伸为3D几何体
-  private extrudeGeometry(group: THREE.Group, shape: any, index: number) {
-    const color = COLOR_ARR[index % COLOR_ARR.length];
+  private extrudeGeometry(group: THREE.Group, shape: any) {
+    const color = COLOR_ARR[0];
 
     const extrudeSettings = {
       depth: 1,
@@ -83,48 +85,27 @@ export class Map extends Engine {
     });
 
     const mesh = new THREE.Mesh(geometry, [material, material1]);
-    // 设置高度将省区分开来
-    if (index % 2 === 0) {
-      mesh.scale.set(1, 1, 1.2);
-    }
 
     group.add(mesh);
   }
 
-  // 标记点
-  markPoint(coord: [number, number]) {
-    let [x, y] = this.projection(coord) as [number, number];
-    this.renderPoint(x, -y);
-  }
+  private drawLine(group: THREE.Group, polygon: any) {
+    const color = COLOR_ARR[1];
+    const lineGeometry = new THREE.BufferGeometry()
+    const pointsArray: any = [];
+    polygon.forEach((row: [number, number]) => {
+      const [x, y] = this.projection(row)
+      pointsArray.push(new THREE.Vector3(x, -y, 1.2))
+    });
+    lineGeometry.setFromPoints(pointsArray)
 
-  renderPoint(x: number, y: number) {
-    const geometry = new THREE.BoxGeometry(2, 2, 2);
-    const material = new THREE.MeshPhongMaterial({color: 0xff0000});
-    const p = new THREE.Mesh(geometry, material);
-    p.position.set(x, y, 0);
-    this.scene.add(p);
+    const lineMaterial = new THREE.LineBasicMaterial({
+      color: color
+    });
 
-    // 标点的世界坐标
-    const worldPosition = new THREE.Vector3();
-    p.getWorldPosition(worldPosition);
+    const line = new THREE.Line(lineGeometry, lineMaterial);
+    group.add(line);
 
-    // 设备坐标
-    const standardVector = worldPosition.project(this.camera);
-
-    const a = window.innerWidth / 2;
-    const b = window.innerHeight / 2;
-    const x1 = Math.round(standardVector.x * a + a);
-    const y1 = Math.round(-standardVector.y * b + b);//标准设备坐标转屏幕坐标
-    const div = document.createElement('div');
-    div.style.width = '20px';
-    div.style.height = '20px';
-    div.style.background = 'rgba(0, 225, 223, 0.5)';
-    div.style.position = 'fixed';
-    div.style.left = `${x1}px`;
-    div.style.top = `${y1}px`;
-    div.style.transform = 'translate(-50%, -50%)';
-    div.style.borderRadius = '50%';
-    document.body.appendChild(div);
-
+    return line;
   }
 }
