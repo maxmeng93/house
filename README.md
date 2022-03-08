@@ -160,3 +160,23 @@ https://mp.weixin.qq.com/s/s85ek98GaNK9bnhJy8mVTw
 
 **大屏适配解决方案**
 https://juejin.cn/post/6972416642600927246
+
+基于等比缩放的大屏自适应方案
+https://juejin.cn/post/6966103143402700837
+
+Vue+Echarts企业级大屏项目适配方案
+https://juejin.cn/post/7009081081760579591
+
+## 大屏适配
+1. 媒体查询
+  太麻烦，成本高
+2. scale等比缩放
+  等比例缩放时，如果实际屏幕比例和设计比例不一致，页面左右或者上下可能会有留白（背景可以vw/vh全屏，主体内容等比缩放）
+  图表库等canvas实现方案，像素值固定，放大后可能会失真，显示模糊（渲染前动态获取放大缩小比例）
+  阿里datav https://datav.aliyuncs.com/share/aed87e5918e568aa927b230d3a23cade
+  网易有数BI https://maxmeng.youdata.163.com/dash/caseView?pid=700250160&rid=334940&cToken=1646651872719646b2d0a64ab0b5d7b2b683b&tab=report
+3. rem
+  更适合移动端自适应
+4. vw
+  不能使用第三方UI库，尺寸会出错。最小字体问题，在小屏幕下，字体可能过大，破坏页面整体样式。
+  

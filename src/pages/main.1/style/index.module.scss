@@ -1,0 +1,21 @@
+.container3d {
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+  & > canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+.main {
+  background: #ffa;
+}
+
+.left {
+  background: #aff;
+}
+
+.right {
+  background: #faf;
+}
