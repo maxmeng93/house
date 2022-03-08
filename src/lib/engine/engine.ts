@@ -6,6 +6,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 export class Engine {
   // 画布容器
   container: HTMLElement;
+  canvas: HTMLElement;
   // 画布宽度
   width: number;
   // 画布高度
@@ -14,6 +15,7 @@ export class Engine {
   scene: THREE.Scene;
   // 渲染器
   renderer: THREE.WebGLRenderer;
+  rendererDom: HTMLElement | null = null;
   // 透视相机
   camera: THREE.PerspectiveCamera;
   // 平行光
@@ -22,11 +24,12 @@ export class Engine {
   orbitControls!: OrbitControls;
 
   constructor(
-    container: HTMLElement, 
+    canvas: HTMLElement,
     width: number = window.innerWidth, 
     height: number = window.innerHeight
   ) {
-    this.container = container;
+    this.container = canvas.parentElement as HTMLElement;
+    this.canvas = canvas;
     
     this.width = width;
     this.height = height;
@@ -35,10 +38,6 @@ export class Engine {
     this.camera = this.initCamera({x: 0, y: 0, z: 120});
     this.renderer = this.initRenderer();
     this.light = this.initLight();
-
-    console.log(this.renderer.domElement);
-
-    this.container.appendChild(this.renderer.domElement);
 
     this.onEvent();
     this.renderScene();
@@ -108,7 +107,7 @@ export class Engine {
   }
 
   initRenderer() {
-    const renderer = new THREE.WebGLRenderer();
+    const renderer = new THREE.WebGLRenderer({canvas: this.canvas});
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(this.width, this.height);
     renderer.setClearColor(0xffffff, 0);

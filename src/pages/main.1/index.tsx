@@ -13,13 +13,13 @@ const projection = d3.geoMercator().center([104.0, 37.5]).scale(80).translate([0
 export default function MapPage() {
   const scale = useAppSelector(getScale);
 
-  const domRef = useRef(null);
+  const canvasRef = useRef(null);
 
   const [points, setPoints] = useState<any[]>([]);
 
   useEffect(() => {
-    if (domRef.current) {
-      const map = new Map(domRef.current, projection, 1920 * scale, 1080 * scale);
+    if (canvasRef.current) {
+      const map = new Map(canvasRef.current, projection, 1920, 1080);
 
       map.openStats();
       map.addOrbitControls();
@@ -41,7 +41,7 @@ export default function MapPage() {
         setPoints(point.update());
       });
     }
-  }, [domRef, scale]);
+  }, [canvasRef, scale]);
 
   const clickName = (data: any) => {
     console.log(data);
@@ -50,11 +50,12 @@ export default function MapPage() {
   return (
     <div>
       <ScaleWrap>
-        <div className={styles.container3d} ref={domRef}>
-          <div className={styles.left}></div>
-          <div className={styles.right}></div>
+        <div className={styles.main}>
+          <canvas ref={canvasRef}></canvas>
           <MarkPoint data={points} clickName={clickName}></MarkPoint>
         </div>
+        <div className={styles.left}></div>
+        <div className={styles.right}></div>
       </ScaleWrap>
     </div>
   );

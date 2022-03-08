@@ -29,13 +29,14 @@
 .box {
   margin: vw(25);
   box-sizing: border-box;
-  padding: 1em;
+  padding: vw(25);
   width: vw(350);
   height: vw(200);
   background: #ffffaa30;
   color: #fff;
   overflow: hidden;
   .title {
+    margin: 0 0 vw(20) 0;
     font-size: vw(20);
   }
   .info {

@@ -9,15 +9,17 @@ const projection = d3.geoMercator().center([104.0, 37.5]).scale(80).translate([0
 
 export default function MapPage() {
 
+  const width = window.innerWidth;
+  const height = window.innerHeight;
   const domRef = useRef(null);
+  const canvasRef = useRef(null);
 
   const [points, setPoints] = useState<any[]>([]);
 
   useEffect(() => {
-    if (domRef.current) {
-      const map = new Map(domRef.current, projection);
+    if (canvasRef.current) {
+      const map = new Map(canvasRef.current, projection);
 
-      // map.openStats();
       map.addOrbitControls();
       map.renderMap(data as GeoJSON.FeatureCollection);
 
@@ -45,6 +47,7 @@ export default function MapPage() {
 
   return (
     <div className={styles.main} ref={domRef}>
+      <canvas ref={canvasRef}></canvas>
       <MarkPoint data={points} clickName={clickName}></MarkPoint>
     </div>
   );

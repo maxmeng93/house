@@ -10,9 +10,12 @@ export class Map extends Engine {
   // 墨卡托投影转换方法
   projection: Function;
   
-  constructor(container: HTMLElement, projection: Function, width = window.innerWidth, height = window.innerHeight ) {
-    super(container, width, height);
+  constructor(canvas: HTMLElement, projection: Function, width = window.innerWidth, height = window.innerHeight ) {
+    // super(canvas, 1920, 1080);
+    super(canvas, width, height);
     this.projection = projection;
+    console.log(width);
+    console.log(height);
   }
 
   /**

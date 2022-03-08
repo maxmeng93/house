@@ -25,7 +25,7 @@ function Point(props: IPointProps) {
   return (
     <div 
       className={styles.point} 
-      style={{ left, top }}
+      style={{ left: left, top: top }}
     >
       {showName && name ? <div className={styles.name} onClick={clickNameHandler}>{name}</div> : null} 
     </div>

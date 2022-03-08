@@ -17,17 +17,15 @@ const ScaleWrap: React.FC<IProps> = (props) => {
   }, []);
 
   function calcRatio() {
-    const defaultWidth = 1920;
-    const defaultHeight = 1080;
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    const ratio = Math.min(width / defaultWidth, height / defaultHeight);
+    const w = window.innerWidth / 1920;
+    const h = window.innerHeight / 1080;
+    const ratio = w < h ? w : h;
     dispatch(setScale(ratio));
   }
 
   return (
     <div 
-      style={{ transform: `scale(${scale}) translate(-50%, -50%)` }} 
+      style={{ transform: `scale(${scale})` }} 
       className={styles.wrap}
     >{props.children}</div>
   );
