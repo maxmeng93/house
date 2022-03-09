@@ -5,29 +5,11 @@
   background: #ffffaa30;
 }
 
-// .left {
-//   background: #aff;
-// }
-
-// .right {
-//   background: #faf;
-// }
-
-// .page {
-//   position: relative;
-//   width: 100vw;
-//   height: 100vh;
-// }
-
-// .main {
-//   position: relative;
-// }
-
 .left,
 .right {
   position: absolute;
   top: 0;
-  width: vw(400);
+  width: 400px;
   height: 100%;
 }
 
@@ -42,19 +24,19 @@
 }
 
 .box {
-  margin: vw(25);
+  margin: 25px;
   box-sizing: border-box;
-  padding: vw(25);
-  width: vw(350);
-  height: vw(200);
+  padding: 25px;
+  width: 350px;
+  height: 200px;
   background: #ffffaa30;
   color: #fff;
   overflow: hidden;
   .title {
-    margin: 0 0 vw(20) 0;
-    font-size: vw(20);
+    margin: 0 0 20px 0;
+    font-size: 20px;
   }
   .info {
-    font-size: vw(16);
+    font-size: 16px;
   }
 }

@@ -17,10 +17,13 @@ const ScaleWrap: React.FC<IProps> = (props) => {
   }, []);
 
   function calcRatio() {
-    const w = window.innerWidth / 1920;
-    // const h = window.innerHeight / 1080;
+    const width = document.documentElement.clientWidth;
+    // const height = document.documentElement.clientHeight;
+    const w = width / 1920;
+    // const h = height / 1080;
     // const ratio = w < h ? w : h;
     dispatch(setScale(w));
+    // dispatch(setScale(ratio));
   }
 
   return (

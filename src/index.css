@@ -4,17 +4,25 @@
   text-rendering: optimizeLegibility;
 }
 
+/* 隐藏滚动条 */
 body::-webkit-scrollbar {
   display: none;
 }
 
-html, body, #root {
-  /* width: 100vw;
-  height: 100vh; */
+/* vw/vh自适应方案 */
+/* html, body, #root {
   margin: 0;
   padding: 0;
-  width: 1920px;
-  height: 1080px;
+  width: 100vw;
+  height: 100vh;
+} */
+
+/* 缩放自适应方案 */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  /* width: 1920px; */
+  /* height: 1080px; */
 }
 
 html {
