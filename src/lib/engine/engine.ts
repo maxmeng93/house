@@ -7,6 +7,8 @@ export class Engine {
   // 画布容器
   container: HTMLElement;
   canvas: HTMLElement;
+  // 固定尺寸时不执行onResize方法
+  fixed: Boolean = false;
   // 画布宽度
   width: number;
   // 画布高度
@@ -34,6 +36,10 @@ export class Engine {
     this.width = width;
     this.height = height;
 
+    if (width && height) {
+      this.fixed = true;
+    }
+
     this.scene = new THREE.Scene();
     this.camera = this.initCamera({x: 0, y: 0, z: 120});
     this.renderer = this.initRenderer();
@@ -55,6 +61,7 @@ export class Engine {
 
   // 当页面调整尺寸时
   onResize() {
+    if (this.fixed) return;
     const width = window.innerWidth, height = window.innerHeight;
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();

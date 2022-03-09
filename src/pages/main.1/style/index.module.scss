@@ -5,10 +5,56 @@
   background: #ffffaa30;
 }
 
+// .left {
+//   background: #aff;
+// }
+
+// .right {
+//   background: #faf;
+// }
+
+// .page {
+//   position: relative;
+//   width: 100vw;
+//   height: 100vh;
+// }
+
+// .main {
+//   position: relative;
+// }
+
+.left,
+.right {
+  position: absolute;
+  top: 0;
+  width: vw(400);
+  height: 100%;
+}
+
 .left {
-  background: #aff;
+  left: 0;
+  background: #aaffff30;
 }
 
 .right {
-  background: #faf;
+  right: 0;
+  background: #ffaaff30;
+}
+
+.box {
+  margin: vw(25);
+  box-sizing: border-box;
+  padding: vw(25);
+  width: vw(350);
+  height: vw(200);
+  background: #ffffaa30;
+  color: #fff;
+  overflow: hidden;
+  .title {
+    margin: 0 0 vw(20) 0;
+    font-size: vw(20);
+  }
+  .info {
+    font-size: vw(16);
+  }
 }

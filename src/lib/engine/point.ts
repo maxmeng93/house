@@ -8,11 +8,15 @@ export class Point {
   readonly projection!: Function;
   // 相机
   readonly camera;
+  readonly width;
+  readonly height;
 
-  constructor(camera: THREE.Camera, projection: Function, type: PointType = 'normal') {
+  constructor(camera: THREE.Camera, projection: Function, width: number, height: number, type: PointType = 'normal') {
     this.camera = camera;
     this.projection = projection;
     this.type = type;
+    this.width = width;
+    this.height = height;
   }
 
   public setPoints(data: any[]) {
@@ -43,8 +47,10 @@ export class Point {
   
       const standardVector = worldPosition.project(this.camera);
   
-      const a = window.innerWidth / 2;
-      const b = window.innerHeight / 2;
+      // const a = window.innerWidth / 2;
+      // const b = window.innerHeight / 2;
+      const a = this.width / 2;
+      const b = this.height / 2;
 
       const left = Math.round(standardVector.x * a + a);
       const top = Math.round(-standardVector.y * b + b);
