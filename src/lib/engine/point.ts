@@ -8,8 +8,8 @@ export class Point {
   readonly projection!: Function;
   // 相机
   readonly camera;
-  readonly width;
-  readonly height;
+  width;
+  height;
 
   constructor(camera: THREE.Camera, projection: Function, width: number, height: number, type: PointType = 'normal') {
     this.camera = camera;
@@ -64,7 +64,9 @@ export class Point {
   }
 
   // 更新点位
-  public update() {
+  public update(width: number, height: number) {
+    this.width = width;
+    this.height = height;
     return this.setNormalPoints(this.points);
   }
 }

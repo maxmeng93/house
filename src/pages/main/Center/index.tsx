@@ -29,11 +29,11 @@ export default function MapPage() {
       setPoints(p);
 
       map.orbitControls.addEventListener('change', () => {
-        setPoints(point.update());
+        setPoints(point.update(window.innerWidth, window.innerHeight));
       });
 
       window.addEventListener('resize', () => {
-        setPoints(point.update());
+        setPoints(point.update(window.innerWidth, window.innerHeight));
       });
     }
   }, [canvasRef]);

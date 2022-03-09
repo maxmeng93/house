@@ -25,16 +25,12 @@ export class Engine {
   // 轨道控制器
   orbitControls!: OrbitControls;
 
-  constructor(
-    canvas: HTMLElement,
-    width: number = window.innerWidth, 
-    height: number = window.innerHeight
-  ) {
+  constructor(canvas: HTMLElement, width?: number, height?: number) {
     this.container = canvas.parentElement as HTMLElement;
     this.canvas = canvas;
     
-    this.width = width;
-    this.height = height;
+    this.width = width || window.innerWidth;
+    this.height = height || window.innerHeight;
 
     if (width && height) {
       this.fixed = true;
