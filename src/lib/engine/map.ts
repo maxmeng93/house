@@ -11,11 +11,8 @@ export class Map extends Engine {
   projection: Function;
   
   constructor(canvas: HTMLElement, projection: Function, width = window.innerWidth, height = window.innerHeight ) {
-    // super(canvas, 1920, 1080);
     super(canvas, width, height);
     this.projection = projection;
-    console.log(width);
-    console.log(height);
   }
 
   /**
