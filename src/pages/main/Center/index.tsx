@@ -4,14 +4,38 @@ import { Map, Point } from '@/lib/engine';
 import data from './china.json';
 import styles from '../style/index.module.scss';
 import MarkPoint from '@/components/MarkPoint';
+import * as dat from 'dat.gui';
 
 const projection = d3.geoMercator().center([104.0, 37.5]).scale(80).translate([0, 0]);
+
+class Gui {
+  rotationSpeed = 0.02;
+  setColor(color: string | number) {
+    console.log(color)
+  }
+}
+const controls = new Gui();
+
 
 export default function MapPage() {
 
   const canvasRef = useRef(null);
 
   const [points, setPoints] = useState<any[]>([]);
+
+  const gui = useRef<any>(null);
+
+  useEffect(() => {
+    if (!gui.current) {
+
+      const g = new dat.GUI();
+      g.add(controls, 'rotationSpeed', 0, 0.5);
+      g.addColor({ '地图边界颜色': '#FF0000' }, '地图边界颜色').onChange(color => {
+        console.log(color)
+      });
+      gui.current = g;
+    }
+  }, [])
 
   useEffect(() => {
     if (canvasRef.current) {
