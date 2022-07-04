@@ -3,6 +3,7 @@ import { Engine } from './engine';
 import type { IPoint } from './types';
 
 const COLOR_ARR = ['#0465BD', '#357bcb', '#3a7abd'];
+const COLOR = 0xffffaa;
 
 export class Map extends Engine {
   // 标记点
@@ -63,8 +64,6 @@ export class Map extends Engine {
 
   // 将2D形状拉伸为3D几何体
   private extrudeGeometry(group: THREE.Group, shape: any) {
-    const color = COLOR_ARR[0];
-
     const extrudeSettings = {
       depth: 1,
       bevelEnabled: true,
@@ -74,17 +73,18 @@ export class Map extends Engine {
 
     const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
 
-    const material = new THREE.MeshStandardMaterial({
-      metalness: 1,
-      color: color,
+    const material = new THREE.MeshBasicMaterial({
+      // metalness: 1,
+      color: COLOR,
     });
-    const material1 = new THREE.MeshStandardMaterial({
-      metalness: 1,
-      roughness: 1,
-      color: color,
+    const material1 = new THREE.MeshBasicMaterial({
+      // metalness: 1,
+      // roughness: 1,
+      color: COLOR,
     });
 
-    const mesh = new THREE.Mesh(geometry, [material, material1]);
+    const mesh = new THREE.Mesh(geometry, material);
+    // const mesh = new THREE.Mesh(geometry, [material, material1]);
 
     group.add(mesh);
   }

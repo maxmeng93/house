@@ -119,3 +119,13 @@ export function kago5(scene: THREE.Scene) {
     scene.add(gltf.scene);
   });
 }
+
+// 赤普零售柜
+export function vendor(scene: THREE.Scene) {
+  return loadGltfModule({
+    path: '/models/vendor/',
+    gltf: 'vendor.glb'
+  }).then((gltf: any) => {
+    scene.add(gltf.scene);
+  })
+}

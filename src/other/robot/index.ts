@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import Stats from 'stats.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { initCamera, initRenderer, initLight, initAxes } from '../utils';
-import { module1, module2, module3, module4, kago5 } from './models';
+import { module1, module2, module3, module4, kago5, vendor } from './models';
 
 export function init() {
   // 时间
@@ -39,15 +39,20 @@ export function init() {
   // module2(scene);
   // kago5(scene);
 
-  module3(scene).then((res: any) => {
-    robot = res.robot;
-    mixer = res.mixer;
-  });
+  // module3(scene).then((res: any) => {
+  //   robot = res.robot;
+  //   mixer = res.mixer;
+  // });
 
   // module4(scene).then((res: any) => {
   //   robot = res.robot;
   //   mixer = res.mixer;
   // });
+
+  vendor(scene).then((res: any) => {
+    robot = res.robot;
+    mixer = res.mixer;
+  })
 
   render();
 

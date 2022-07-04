@@ -50,6 +50,8 @@ export default function MapPage() {
         { long: 116.40355, lat: 39.923402, name: '北京' }
       ]);
 
+      console.log(p);
+
       setPoints(p);
 
       map.orbitControls.addEventListener('change', () => {
