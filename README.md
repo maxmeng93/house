@@ -136,6 +136,9 @@ https://zhuanlan.zhihu.com/p/154425898
 **ThreeJS 与建模人员的合作方式**  
 https://zhuanlan.zhihu.com/p/25400458
 
+**适用于WEB端的3D模型及贴图压缩研究**
+https://zhuanlan.zhihu.com/p/98507074
+
 使用**UV 映射**将一张纹理贴图映射到不同面或不同位置。对于复杂对象，可以在建模时建立好模型贴图。
 
 ## 例子
