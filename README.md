@@ -136,13 +136,13 @@ https://zhuanlan.zhihu.com/p/154425898
 **ThreeJS 与建模人员的合作方式**  
 https://zhuanlan.zhihu.com/p/25400458
 
-**适用于WEB端的3D模型及贴图压缩研究**
-https://zhuanlan.zhihu.com/p/98507074
+**适用于 WEB 端的 3D 模型及贴图压缩研究** https://zhuanlan.zhihu.com/p/98507074
 
-**threejs官方编辑器**
-https://threejs.org/editor/
+**threejs 官方编辑器** https://threejs.org/editor/
 
 使用**UV 映射**将一张纹理贴图映射到不同面或不同位置。对于复杂对象，可以在建模时建立好模型贴图。
+
+**压缩 gltf 模型**可以使用 `gltf-pipeline`，最好把模型拆分为`bin`、`纹理图片`、`gltf文件`，可以单独对纹理图片做压缩。
 
 ## 例子
 
