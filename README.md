@@ -144,6 +144,8 @@ https://zhuanlan.zhihu.com/p/25400458
 
 **压缩 gltf 模型**可以使用 `gltf-pipeline`，最好把模型拆分为`.bin`、`textures`、`.gltf`，可以单独对纹理图片做压缩。
 
+Three.js 透明物体不能正常显示/渲染顺序的控制问题 https://www.jianshu.com/p/5807b5f69480
+
 ## 例子
 
 教你用 three.js 写一个炫酷的 3D 登陆页面  
