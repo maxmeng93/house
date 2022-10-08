@@ -184,6 +184,9 @@ https://www.sucaim.com/yuanma/datav/4557.html
 
 Three.js地球开发—7.three.js波动光圈特效
 https://blog.csdn.net/weixin_43787178/article/details/115070764
+
+**shader**
+https://github.com/csdjk/ThreeJS-Shader
 ## 大屏适配
 
 1. 媒体查询太麻烦，成本高
