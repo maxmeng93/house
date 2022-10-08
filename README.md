@@ -172,6 +172,7 @@ https://juejin.cn/post/7009081081760579591
 
 **threejs 3D 特效**
 http://47.110.129.207/me-smart-ui/
+https://gitee.com/superzay/threejs-animate
 
 ## 大屏适配
 
