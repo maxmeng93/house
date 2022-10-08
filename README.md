@@ -170,6 +170,9 @@ https://juejin.cn/post/6966103143402700837
 Vue+Echarts 企业级大屏项目适配方案  
 https://juejin.cn/post/7009081081760579591
 
+**threejs 3D 特效**
+http://47.110.129.207/me-smart-ui/
+
 ## 大屏适配
 
 1. 媒体查询太麻烦，成本高
