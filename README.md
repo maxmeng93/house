@@ -174,6 +174,16 @@ https://juejin.cn/post/7009081081760579591
 http://47.110.129.207/me-smart-ui/
 https://gitee.com/superzay/threejs-animate
 
+**shadertoy shader demo**
+https://www.zhihu.com/question/22514128  shadertoy 这个网站如何玩？
+https://www.shadertoy.com/
+
+threejs 特效
+https://github.com/stonerao/three-effect
+https://www.sucaim.com/yuanma/datav/4557.html
+
+Three.js地球开发—7.three.js波动光圈特效
+https://blog.csdn.net/weixin_43787178/article/details/115070764
 ## 大屏适配
 
 1. 媒体查询太麻烦，成本高
