@@ -144,7 +144,9 @@ https://zhuanlan.zhihu.com/p/25400458
 
 **压缩 gltf 模型**可以使用 `gltf-pipeline`，最好把模型拆分为`.bin`、`textures`、`.gltf`，可以单独对纹理图片做压缩。
 
-Three.js 透明物体不能正常显示/渲染顺序的控制问题 https://www.jianshu.com/p/5807b5f69480
+Three.js 透明物体不能正常显示/渲染顺序的控制问题 
+https://www.jianshu.com/p/5807b5f69480
+https://www.webglstudy.com/article/1002845.html
 
 ## 例子
 
@@ -183,6 +185,15 @@ https://www.shadertoy.com/
 threejs 特效
 https://github.com/stonerao/three-effect
 https://www.sucaim.com/yuanma/datav/4557.html
+https://github.com/Thinkia/three-Effect
+
+掠过特效
+https://github.com/stonerao/three-city-pass 
+https://blog.csdn.net/qq_29814417/article/details/102840178
+
+飞线特效
+https://blog.csdn.net/weixin_40856652/article/details/125184863
+https://juejin.cn/post/7064908871688519710
 
 Three.js地球开发—7.three.js波动光圈特效
 https://blog.csdn.net/weixin_43787178/article/details/115070764
