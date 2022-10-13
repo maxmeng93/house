@@ -194,9 +194,16 @@ https://blog.csdn.net/qq_29814417/article/details/102840178
 飞线特效
 https://blog.csdn.net/weixin_40856652/article/details/125184863
 https://juejin.cn/post/7064908871688519710
+https://blog.csdn.net/towrabbit/article/details/103117002
 
 Three.js地球开发—7.three.js波动光圈特效
 https://blog.csdn.net/weixin_43787178/article/details/115070764
+
+使用Three.js实现炫酷的赛博朋克风格3D数字地球大屏
+https://www.cnblogs.com/dragonir/p/16516254.html
+
+**Three.js通过不规则路径生成墙体(围栏)**
+https://blog.csdn.net/qq_44375977/article/details/122102337
 
 **shader**
 https://github.com/csdjk/ThreeJS-Shader
