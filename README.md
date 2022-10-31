@@ -148,6 +148,9 @@ Three.js 透明物体不能正常显示/渲染顺序的控制问题
 https://www.jianshu.com/p/5807b5f69480
 https://www.webglstudy.com/article/1002845.html
 
+Three 之 three.js （webgl）性能优化、提高帧率的思路/方向整理
+https://blog.csdn.net/u014361280/article/details/124285654
+
 ## 例子
 
 教你用 three.js 写一个炫酷的 3D 登陆页面  
