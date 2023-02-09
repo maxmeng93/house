@@ -210,6 +210,9 @@ https://blog.csdn.net/qq_44375977/article/details/122102337
 
 **shader**
 https://github.com/csdjk/ThreeJS-Shader
+
+shader 课程
+https://github.com/NikLever/GLSLfromScratch
 https://www.bilibili.com/video/BV1kP4y1Y7MT?p=1
 https://codepen.io/collection/ngRMbq/
 ## 大屏适配
