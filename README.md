@@ -144,12 +144,14 @@ https://zhuanlan.zhihu.com/p/25400458
 
 **压缩 gltf 模型**可以使用 `gltf-pipeline`，最好把模型拆分为`.bin`、`textures`、`.gltf`，可以单独对纹理图片做压缩。
 
-Three.js 透明物体不能正常显示/渲染顺序的控制问题 
-https://www.jianshu.com/p/5807b5f69480
-https://www.webglstudy.com/article/1002845.html
+Three.js 透明物体不能正常显示/渲染顺序的控制问题  
+https://www.jianshu.com/p/5807b5f69480 https://www.webglstudy.com/article/1002845.html
 
-Three 之 three.js （webgl）性能优化、提高帧率的思路/方向整理
+Three 之 three.js （webgl）性能优化、提高帧率的思路/方向整理  
 https://blog.csdn.net/u014361280/article/details/124285654
+
+three.js 渲染调优，提升 3d 场景更逼真的渲染效果  
+https://juejin.cn/post/7117519746098003982
 
 ## 例子
 
@@ -177,44 +179,46 @@ https://juejin.cn/post/6966103143402700837
 Vue+Echarts 企业级大屏项目适配方案  
 https://juejin.cn/post/7009081081760579591
 
-**threejs 3D 特效**
-http://47.110.129.207/me-smart-ui/
+**threejs 3D 特效**  
+http://47.110.129.207/me-smart-ui/  
 https://gitee.com/superzay/threejs-animate
 
-**shadertoy shader demo**
-https://www.zhihu.com/question/22514128  shadertoy 这个网站如何玩？
+**shadertoy shader demo**  
+https://www.zhihu.com/question/22514128  
+shadertoy 这个网站如何玩？  
 https://www.shadertoy.com/
 
-threejs 特效
-https://github.com/stonerao/three-effect
-https://www.sucaim.com/yuanma/datav/4557.html
+threejs 特效  
+https://github.com/stonerao/three-effect  
+https://www.sucaim.com/yuanma/datav/4557.html  
 https://github.com/Thinkia/three-Effect
 
-掠过特效
-https://github.com/stonerao/three-city-pass 
+掠过特效  
+https://github.com/stonerao/three-city-pass  
 https://blog.csdn.net/qq_29814417/article/details/102840178
 
-飞线特效
-https://blog.csdn.net/weixin_40856652/article/details/125184863
-https://juejin.cn/post/7064908871688519710
+飞线特效  
+https://blog.csdn.net/weixin_40856652/article/details/125184863  
+https://juejin.cn/post/7064908871688519710  
 https://blog.csdn.net/towrabbit/article/details/103117002
 
-Three.js地球开发—7.three.js波动光圈特效
+Three.js 地球开发—7.three.js 波动光圈特效  
 https://blog.csdn.net/weixin_43787178/article/details/115070764
 
-使用Three.js实现炫酷的赛博朋克风格3D数字地球大屏
+使用 Three.js 实现炫酷的赛博朋克风格 3D 数字地球大屏  
 https://www.cnblogs.com/dragonir/p/16516254.html
 
-**Three.js通过不规则路径生成墙体(围栏)**
+**Three.js 通过不规则路径生成墙体(围栏)**  
 https://blog.csdn.net/qq_44375977/article/details/122102337
 
-**shader**
+**shader**  
 https://github.com/csdjk/ThreeJS-Shader
 
-shader 课程
-https://github.com/NikLever/GLSLfromScratch
-https://www.bilibili.com/video/BV1kP4y1Y7MT?p=1
+shader 课程  
+https://github.com/NikLever/GLSLfromScratch  
+https://www.bilibili.com/video/BV1kP4y1Y7MT?p=1  
 https://codepen.io/collection/ngRMbq/
+
 ## 大屏适配
 
 1. 媒体查询太麻烦，成本高
