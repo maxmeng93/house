@@ -42,7 +42,9 @@ MeshBasicMaterial 网格基础材质，不会对光有反应，只使用指定�
 MeshDepthMaterial 网格深度材质，对象距摄像机的距离决定其颜色（很少用）  
 MeshNormalMaterial 网格法向材质，根据法向量决定其颜色  
 MeshFaceMaterial 网格面材质，可以为各个面指定不同颜色  
-MeshLambertMaterial 网格朗伯材质，考虑光照影响，适合创建颜色暗淡的物体（表面粗糙物体，如树木、岩石、山体） MeshPhongMaterial 网格 Phong 材质，考虑光照影响，适合创建颜色明亮的物体 ShaderMaterial 着色器材质，允许使用自定义着色程序，直接控制顶点的放置方式及像素的着色方式  
+MeshLambertMaterial 网格朗伯材质，考虑光照影响，适合创建颜色暗淡的物体（表面粗糙物体，如树木、岩石、山体）  
+MeshPhongMaterial 网格 Phong 材质，考虑光照影响，适合创建颜色明亮的物体  
+ShaderMaterial 着色器材质，允许使用自定义着色程序，直接控制顶点的放置方式及像素的着色方式  
 MeshStandardMaterial 基于物理的标准网格材质，使用该材质时应始终指定 envMap 环境贴图
 
 ## 纹理
