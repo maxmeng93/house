@@ -11,6 +11,7 @@
 - traverse 遍历
 - fog 雾化
 - overrideMaterial 材质覆盖
+- environment 设置场景中所有物理材质的环境贴图
 
 ## 相机
 
@@ -19,6 +20,17 @@
 ## 渲染器
 
 基于摄像机和场景提供的信息，调用底层图形 API 执行真正的场景绘制工作
+
+- outputEncoding 定义渲染器输出编码
+
+除非你需要使用线性颜色空间进行后期处理，否则请在使用 glTF 的时候将 WebGLRenderer 进行如下配置：`renderer.outputEncoding = THREE.sRGBEncoding;`
+
+编码器最佳实践
+
+1. 带有颜色数据（ .map、.emissiveMap 等）的纹理应配置为.encoding = sRGBEncoding;  所有其他纹理使用 LinearEncoding.
+2. 顶点颜色应存储在线性颜色空间中。
+3. 材质 `.color` `.emissive` 应该使用线性色彩空间。值得注意的是，这意味着如果您尝试将场景中的对象与 `#4285F4` HTML/CSS 中的颜色匹配，则材质实际上需要为 `material.color.setHex( 0x4285f4 ).convertSRGBToLinear()`.  浅色也是如此。场景背景颜色和雾色可能是例外？
+4. 如果不使用后期处理，渲染器应该有.outputEncoding = sRGBEncoding，否则使用 LinearEncoding 并应用伽马校正 (TBD) 作为后期的最后一次传递。
 
 ## 对象(几何体)
 
@@ -48,6 +60,18 @@ ShaderMaterial 着色器材质，允许使用自定义着色程序，直接控�
 MeshStandardMaterial 基于物理的标准网格材质，使用该材质时应始终指定 envMap 环境贴图
 
 ## 纹理
+
+encoding 编码（同 renderer.outputEncoding 一样）
+
+当从外部加载纹理并将纹理应用到 glTF 模型，则必须给定对应的颜色空间与朝向
+
+```js
+// If texture is used for color information, set colorspace.
+texture.encoding = THREE.sRGBEncoding;
+
+// UVs use the convention that (0, 0) corresponds to the upper left corner of a texture.
+texture.flipY = false;
+```
 
 ## 坐标系
 
